@@ -1,40 +1,59 @@
+/* Variables */
+var userTable = SpreadsheetApp.openById(getUserTableId());
 
-var userTable = SpreadsheetApp
-        .openById(getUserTableId());
+var MeritBadges = [
+  'Laser Cutter',
+  '3D Printing',	
+  'Hand Tools',	
+  'HandiBot',	
+  'Power Tools',
+  'Print Shop',	
+  'Sewing Machine',
+  'Embroidery Machine',	
+  'Vinyl Cutter',
+  'FormLabs',	
+  'Soldering',
+  'Arduino',
+  'Button Maker',
+  'Raspberry Pi'
+];
 
-
-// this functions gets called when the pages loads every time.
-function doGet(e) {
-  Logger.log("opening");  
-  parameter = e.parameter;
-  var page= e.parameter.page;
-  if(!page){
-    page = 'index';
-  }
-     return HtmlService
-     .createTemplateFromFile(page)
-    // .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-     .evaluate();
+function getMeritBadges(){
+  return MeritBadges; 
 }
 
 
-// this function let you include other files' content in your index.html
+/*
+================================ DOGET =====================================
+This functions gets called when the pages loads every time.
+============================================================================
+*/
+function doGet(e) {
+  Logger.log("Opening page...");  
+  return HtmlService.createTemplateFromFile('index').evaluate();
+}
+
+/*
+=============================== INCLUDE ====================================
+this function let you include other files' content in your index.html
+============================================================================
+*/
 function include(filename) {
   return HtmlService.createHtmlOutputFromFile(filename)
       .getContent();
 }
 
-
-
-
-
-///// Utility Functions
-
-// any time you get some rows from a google sheet, run it through this function so that it uses the column names as keys, instead of just numbers.
-// data : the data from the sheet
-// keysRow : the row that holds the column names (starts a 0, NOT 1)
-// startsRow : the row that holds the FIRST row of data (starts a 0, NOT 1)
-// filterFunction: a function that gets a row of data (with the column names as keys), and returns true or false, based on whatever criteria you want.
+/* 
+=========================== DATAINTOHASHROWS ===============================
+Any time you get some rows from a google sheet, run it through this function
+so that it uses the column names as keys, instead of just numbers.
+data : the data from the sheet
+keysRow : the row that holds the column names (starts a 0, NOT 1)
+startsRow : the row that holds the FIRST row of data (starts a 0, NOT 1)
+filterFunction: a function that gets a row of data (with the column names as
+keys), and returns true or false, based on whatever criteria you want.
+============================================================================
+*/
 function dataIntoHashRows(data, keysRow, startRow, filterFunction){
   var idKey= {};
   var keyId= {};
@@ -71,11 +90,15 @@ function dataIntoHashRows(data, keysRow, startRow, filterFunction){
   
 }
 
-
-//insert a new row into a sheet. Use column names as keys. You don't have to have blank columns in the row
-// table: the google sheets object
-// data: the row, with column names as keys
-// keysrow: which row of the table holds the column names (starts a 0, NOT 1)
+/* 
+============================ INSERTHASHROW =================================
+Insert a new row into a sheet. Use column names as keys. You don't have to 
+have blank columns in the row
+table: the google sheets object
+data: the row, with column names as keys
+keysrow: which row of the table holds the column names (starts a 0, NOT 1)
+============================================================================
+*/
 function insertHashRow(table, data, keysrow){
   var insertArray = [];
   var idKey= {};
@@ -110,14 +133,17 @@ function insertHashRow(table, data, keysrow){
   table.getActiveSheet().appendRow(insertArray);
 }
 
-//update a row in a sheet. Use column names as keys. 
-// 
-// table: the google sheets object
-// data: the row, with column names as keys. Missing columns will be updated to blank, NOT left alone.
-// keysrow: which row of the table holds the column names (starts a 0, NOT 1)
-// updateKey: object {key: column Name of identifying key of row to update (eg 'NetId'),
-//                    value : value for that cell in that row (eg 'dhu3')
-
+/* 
+============================ UPDATEHASHROW =================================
+update a row in a sheet. Use column names as keys.  
+table: the google sheets object
+data: the row, with column names as keys. Missing columns will be updated to 
+blank, NOT left alone.
+keysrow: which row of the table holds the column names (starts a 0, NOT 1)
+updateKey: object {key: column Name of identifying key of row to update 
+(eg 'NetId'), value : value for that cell in that row (eg 'dhu3')
+============================================================================
+*/
 function updateHashRow(table, data, keysrow, updateKey){
   Logger.log("updating2");
   var insertArray = [];
@@ -171,10 +197,7 @@ function updateHashRow(table, data, keysrow, updateKey){
 
 
 function findRowNumForQuery(table, keysRow, startRow, queryFunction){
-  var tableData = table
-  .getActiveSheet()
-  .getDataRange()
-  .getValues();
+  var tableData = table.getActiveSheet().getDataRange().getValues();
 
   var data = dataIntoHashRows(tableData, keysRow, startRow).data;
     

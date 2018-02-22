@@ -8,45 +8,104 @@
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    
-    
+  
+  
   </head>
+  
   <body>
   <div class="mainbody">
+  <div class="searchbody">
+  <input id="netidinput" size=10>
+  <span class="searchgo">search</span>
+  </div>
   
   Hi there!??????
+  
+  </div>
+  <div class="userInfo">
+ <span class="userName"></span>
+  </div> 
+  <div class="userMeritBadgeScreen">
+   <ul class="userMeritBadgeList">
+   
+   </ul>
+  
   
   </div>
   
   
   <script>
   // this runs when the page is done loading.
+  var meritBadges = false;
+  var allUserData = false;
+  var thisUserData = false;
   
-  function getUserData(callback){
+  function getMeritBadges(callback){
     google.script.run
       .withFailureHandler(function(error){console.log(error);})
       .withSuccessHandler(function(data){
-       userData = data;
-      console.log(userData);
-    if(callback){callback();}
+        meritBadges = data;
+        console.log(meritBadges);
+        if(callback){callback();}
+    }).getMeritBadges(); 
+  }
+  
+  function getAllUserData(callback){
+    google.script.run
+      .withFailureHandler(function(error){console.log(error);})
+      .withSuccessHandler(function(data){
+        allUserData = data;
+        console.log(allUserData);
+        if(callback){callback();}
     }).getUserData(); 
   }  
   
-  
-  function showUserData(){
-    console.log(userData);
+  function getThisUserData(netid){
+    console.log(netid);
+    var searched_array = allUserData.userData.data.filter(function(a){
+      if(netid.toLowerCase() == a.netid.toLowerCase()){
+        return true;
+      } else {
+        return false;
+      }
+    });
+    thisUserData = searched_array[0];
+    console.log(thisUserData);  
+    showUserMeritBadgeScreen();
+    
+    $(".userName").text(thisUserData.name);
   }
   
-  var userData = false;
-  $(function() {
-
-
-     getUserData(showUserData);
-
-
-  });
   
+  function showUserMeritBadgeScreen(){
+    console.log(thisUserData);
+    $(".userMeritBadgeList").empty();
+    $.each(meritBadges, function(index, meritBadge){
+      console.log("'"+meritBadge+"'");
+      console.log(thisUserData[meritBadge]);
+      if(thisUserData[meritBadge] && thisUserData[meritBadge].toLowerCase()== "yes"){
+        console.log("has " + meritBadge);
+        $(".userMeritBadgeList").append("<li class='hasMeritBadge'>has "+meritBadge+"</li>");
+      }else{
+        console.log("doesn't have " + meritBadge);
+        $(".userMeritBadgeList").append("<li class='hasMeritBadge'>no has "+meritBadge+"</li>");
+      }
+    });
+  }
+  
+  $(function() {
+    getAllUserData();    
+    getMeritBadges();
+    
+    $(".searchgo").click(function(){
+      console.log("clicked");
+      var netid = $("#netidinput").val();
+      getThisUserData(netid);
+    });
+  });
   </script>
     
   </body>
