@@ -1,203 +1,254 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
+  	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<base target="_top">
+		  
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">  
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		  <?!= include("css.jquery.fancybox"); ?>
+		  <?!= include("css.owl.carousel"); ?>
+		  <?!= include("css.animate"); ?> 
+		  <?!= include("STYLESHEET"); ?>   
 
-  <?!= include("STYLESHEET"); ?>   
 
-  <?!= include("STYLESHEET"); ?> 
-  <?!= include("css.animate"); ?> 
+		<script
+		  src="https://code.jquery.com/jquery-3.2.1.min.js"
+		  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		  crossorigin="anonymous"></script>
+		<script
+		  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+		  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+		  crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+		  
+		  
+		<script
+		  src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"
+		  integrity="sha256-F0O1TmEa4I8N24nY0bya59eP6svWcshqX1uzwaWC4F4="
+		  crossorigin="anonymous"></script>
+		  
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.5/isotope.pkgd.min.js" 
+		  integrity="sha256-KsHewupnZlPcM8HccYY2Q0NXs1L9B9a/l1DGklAZGrw=" 
+		  crossorigin="anonymous"></script>
+
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" 
+		  integrity="sha256-2Pjr1OlpZMY6qesJM68t2v39t+lMLvxwpa8QlRjJroA=" 
+		  crossorigin="anonymous"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js" 
+		  integrity="sha256-F6h55Qw6sweK+t7SiOJX+2bpSAa3b/fnlrVCJvmEj1A=" 
+		  crossorigin="anonymous"></script>
+
+		<?!=include("js.retina"); ?>
+		<?!=include("js.jquery.fancybox.pack"); ?>
+		<?!=include("js.jquery.fancybox-media"); ?>
+		<?!=include("js.owl.carousel.min"); ?>
+		<?!=include("js.jquery.tweet"); ?>
+		<?!=include("js.jquery.countdown.min"); ?>
+		<?!=include("js.wow.min"); ?>
+		<?!=include("js.jquery.flot.min"); ?>
+		<?!=include("js.jquery.flot.pie"); ?>
+		<?!=include("js.jquery.flot.categories"); ?>
+		<?!=include("js.SmoothScroll"); ?>
+		<?!=include("js.layerslider.transitions"); ?>
+		<?!=include("js.layerslider.kreaturamedia.jquery"); ?>
+		<?!=include("js.greensock"); ?>
+
+  	</head>
   
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">  
-  <?!= include("css.jquery.fancybox"); ?>
-  <?!= include("css.owl.carousel"); ?>
-  <?!= include("js.SmoothScroll"); ?>
-  
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-<script
-  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-  crossorigin="anonymous"></script>
-<script
-  src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"
-  integrity="sha256-F0O1TmEa4I8N24nY0bya59eP6svWcshqX1uzwaWC4F4="
-  crossorigin="anonymous"></script>
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.5/isotope.pkgd.min.js" 
-  integrity="sha256-KsHewupnZlPcM8HccYY2Q0NXs1L9B9a/l1DGklAZGrw=" 
-  crossorigin="anonymous"></script>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" 
-  integrity="sha256-2Pjr1OlpZMY6qesJM68t2v39t+lMLvxwpa8QlRjJroA=" 
-  crossorigin="anonymous"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js" 
-  integrity="sha256-F6h55Qw6sweK+t7SiOJX+2bpSAa3b/fnlrVCJvmEj1A=" 
-  crossorigin="anonymous"></script>
-
-<!--<script src="js/retina.min.js"></script> -->
-<?!=include("js.jquery.fancybox.pack"); ?>
-<?!=include("js.jquery.fancybox-media"); ?>
-<?!=include("js.owl.carousel.min"); ?>
-<?!=include("js.jquery.tweet"); ?>
-<?!=include("js.jquery.countdown.min"); ?>
-<?!=include("js.wow.min"); ?>
-<?!=include("js.jquery.flot.min"); ?>
-<?!=include("js.jquery.flot.pie"); ?>
-<?!=include("js.jquery.flot.categories"); ?>
-
-<!--
-<script src="js/layerslider/js/greensock.js"></script>
-<script src="js/layerslider/js/layerslider.transitions.js"></script>
-<script src="js/layerslider/js/layerslider.kreaturamedia.jquery.js"></script>
--->
-
-		<!--/ scripts -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-  
-  
-  </head>
-  
-  <body>
-   <div class="page">
-			
-			<!-- page header bottom -->
-			<header id="page-header-bottom" class="page-header-bottom">
-				<div class="grid-row">
-					<!-- logo -->
-					<a href="index.html" class="logo">
-						<img src="#" alt=""> <!--Maker hub logo should come here-->
-					</a>
-					<!--/ logo -->				
-					<!-- main nav -->
-					<nav class="main-nav">
-						<ul>
-							<li><a href="#" class="active">Home</a></li>
-							<li><a href="#">Sub Menus</a>
-								<ul>
-									<li><a href="#">Sub Menu 1</a></li>
-									<li><a href="#">Sub Menu 2</a></li>
-								</ul>
-							</li>
-							<li><a href="#">Menu 3</a></li>							
-							<li><a href="#">Contacts</a></li>
-						</ul>
-					</nav>
-					<!--/ main nav -->
-				
-					<!-- mobile nav -->
-					<nav id="mobile-nav" class="mobile-nav">
-						<a href="#mobile-nav-1" class="switcher"><i class="fa fa-align-justify"></i></a>
-						<ul id="mobile-nav-1">
-							<li><a href="#" class="active">Home</a></li>
-							<li><a href="#mobile-nav-2" class="opener"><i class="fa fa-angle-right"></i>Menu With Sub Menu's</a></li>
-							<li><a href="#">Menu 3</a></li>
-							<li><a href="#">Contacts</a></li>							
-						</ul>
-						<ul id="mobile-nav-2">
-							<li><a href="#mobile-nav-1" class="back"><em>&larr;</em> &nbsp;BACK</a></li>
-							<li><a href="#" class="active">Sub Menu 1</a></li>
-							<li><a href="#">Sub Menu 2</a></li>							
-						</ul>						
-					</nav>
-					<!--/ main nav -->
-				</div>
-			</header>
-			<!--/ page header bottom -->
-			<div id="page-header-bottom-holder" class="page-header-bottom-holder"></div>
-            <div class="main container">
-               <section class="page-content-alt">
-				   <div class="grid-row composer">
-					   <div class="columns-row">
-						   <h2>User Look up</h2>
-						   <div class="columns-col columns-col-3 wow fadeInLeft">
-							   <h3>Search Net ID</h3>
-						   </div>
-                           <div class="columns-col columns-col-6 wow fadeInLeft">
-							  <div class="widget widget-search">
-								<form action="#" id="visitorSearch">									
-									<input id="netidinput" size=10 type="text" placeholder="Search">
-									<button  class="searchgo" type="submit"></button>									
-									<i class="fa fa-search"></i>
-								</form>
-							  </div>
-						   </div>
-					   </div>
-				  </div>
-			   </section>
-                <!--input id="netidinput" size=10>
-                <span class="searchgo">search</span-->
-     
-               <section class="ft-Wrapper userinformation"> <!--YOU NEED TO PUT A FUNCTION TO HIDE "userinformation" SECTION WHEN ITS NOT RUN-->
-					<div class="grid-row composer">
-					<br />
-					<br />
-						<div class="columns-row">
-							<div class="columns-col columns-col-9 wow fadeInLeft">
-								<h3><span class="userName"></span></h3>
-								<hr>
-								<h4 class="h1">Merit Badge Info</h4>
-								
-								<ul class="list userMeritBadgeList" data-wow-delay="0.3s">									
-								</ul>	
-								<br><br>						
-							</div>						
-						</div>
-					</div>
-				</section>		
-				
-				<!-- page footer bottom -->
-				<footer class="page-footer-bottom">
+		<body>
+			<div class="page-boxed" >
+					
+				<!-- page header bottom -->
+				<header id="page-header-bottom" class="page-header-bottom">
 					<div class="grid-row">
-						<!-- secondary nav -->
-						<nav class="secondary-nav">
+						<!-- logo -->
+						<a href="index.html" class="logo">
+							<img src="#" alt=""> <!--Maker hub logo should come here-->
+						</a>
+                        <div class="sessionUserInfo">
+                        Logged In: <span class="sessionUserNetID">anonymous</span>
+                        </div>
+						<!--/ logo -->				
+						<!-- main nav -->
+						<nav class="main-nav">
 							<ul>
-								<li><a href="#">Home</a></li>
-								<li><a href="#">Menu 3</a></li>							
-								<li><a href="#">Contacts</a></li>
+								<li><a href="#" class="active dontopenurl">Home</a></li>
+                                <!--
+								<li><a href="#">Sub Menus</a>
+									<ul>
+										<li><a href="#" class="dontopenurl">Sub Menu 1</a></li>
+										<li><a href="#" class="dontopenurl">Sub Menu 2</a></li>
+									</ul>
+								</li>
+                                -->
+								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup">Visitor Lookup</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="showMeritBadgeEdit">Merit Badges</a></li>							
+<!--								<li><a href="#" class="dontopenurl">Contacts</a></li> -->
 							</ul>
 						</nav>
-						<!--/ secondary nav -->
-					
-						<!-- copyrights -->
-						<div class="copyrights">MakerHub © 2018. All rights reserved.</div>
-						<!--/ copyrights -->
+						<!--/ main nav -->
+						
+						<!-- mobile nav -->
+						<nav id="mobile-nav" class="mobile-nav">
+							<a href="#mobile-nav-1" class="switcher"><i class="fa fa-align-justify"></i></a>
+							<ul id="mobile-nav-1">
+								<li><a href="#" class="dontopenurl active">Home</a></li>
+<!--								<li><a href="#mobile-nav-2" class="opener"><i class="fa fa-angle-right"></i>Menu With Sub Menus</a></li> -->
+								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup">Visitor Lookup</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="showMeritBadgeEdit">Merit Badges</a></li>							
+                                
+							</ul>
+                            <!--
+							<ul id="mobile-nav-2">
+								<li><a href="#mobile-nav-1" class="back"><em>&larr;</em> &nbsp;BACK</a></li>
+								<li><a href="#" class="active dontopenurl">Sub Menu 1</a></li>
+								<li><a href="#" class="dontopenurl">Sub Menu 2</a></li>							
+							</ul>	
+                            -->
+						</nav>
+						<!--/ main nav -->
 					</div>
-				</footer>
-				<!--/ page footer bottom -->
-			
-				<a href="#" id="scroll-top" class="scroll-top fa fa-angle-up"></a>
-			</div>
-		</div>
-  
-    <!--div class="section sticky userInfo">
-      <div class="sectionTitle">User deets</div>
-      <div class="sectionBody">
-        <span class="userName"></span>
-      </div>
-    </div--> 
-  
-    <!--div class="section userMeritBadgeScreen">
-      <div class="sectionTitle">Merit Badge Info</div>
-      <div class="sectionBody">
-        <ul class="userMeritBadgeList">
-        </ul>
-      </div>
-    </div>
-  </div-->
-  
-  
-  <script>
+				</header>
+				<!--/ page header bottom -->
+				<div id="page-header-bottom-holder" class="page-header-bottom-holder"></div>
+		            <div class="main">
+                        
+ 		               	<section class="appSectionAlwaysShow ft-Wrapper visitorEditPriv visitorInfo" id=" userinformation"> <!--YOU NEED TO PUT A FUNCTION TO HIDE "userinformation" SECTION WHEN ITS NOT RUN-->
+							<div class="grid-row composer">
+								<br />
+								<div class="columns-row">
+									<div class="columns-col columns-col-12 wow fadeInLeft">
+										<h2>Visitor: <span class="userName"></span></h2>
+                                    </div>
+								</div>
+							</div>
+						</section>	
+ 
+		                <section class="appSection page-content-alt visitorEditPriv userLookup">
+				     	    <div class="grid-row composer">
+							    <div class="columns-row">
+                                    <div class="columns-col columns-col-12 wow fadeInLeft">
+							  	        <h2>User Look up</h2>
+                                    </div>
+								    <div class="columns-col columns-col-3 wow fadeInLeft">
+									    <h3>Search Net ID</h3>
+								    </div>
+		                            <div class="columns-col columns-col-6 wow fadeInLeft">
+									  	<div class="widget widget-search">
+											<form action="#" id="visitorSearch">									
+												<input id="netidinput" size=10 type="text" placeholder="Search">
+												<button  class="searchgo" type="submit"></button>									
+												<i class="fa fa-search"></i>
+											</form>
+									  	</div>
+								   	</div>
+							   	</div>
+						  	</div>
+					   	</section>
+		               
+		     
+		               	<section class="appSection ft-Wrapper visitorEditPriv meritBadgeEdit" id=" userinformation"> <!--YOU NEED TO PUT A FUNCTION TO HIDE "userinformation" SECTION WHEN ITS NOT RUN-->
+							<div class="grid-row composer">
+								<br />
+								<br />
+								<div class="columns-row">
+                                  	<div class="columns-col columns-col-9 wow fadeInLeft">
+										<h3>Merit Badge Info</h3>
+										<ul class="list userMeritBadgeList" data-wow-delay="0.3s">									
+										</ul>	
+										<br><br>						
+									</div>						
+								</div>
+							</div>
+						</section>		
+						
+						<!-- page footer bottom -->
+						<footer class="page-footer-bottom">
+							<div class="grid-row"> -->
+								<!-- secondary nav -->
+                                <!--
+								<nav class="secondary-nav">
+									<ul>
+										<li><a href="#">Home</a></li>
+										<li><a href="#">Menu 3</a></li>							
+										<li><a href="#">Contacts</a></li>
+									</ul>
+								</nav>
+                                -->
+								<!--/ secondary nav -->
+							
+								<!-- copyrights -->
+								<div class="copyrights">MakerHub © 2018. All rights reserved.</div>
+								<!--/ copyrights -->
+							</div>
+						</footer>
+						<!--/ page footer bottom -->
+					
+						<!--a href="" id="scroll-top" class="scroll-top fa fa-angle-up"></a-->
+					</div>
+				</div> 
+  <script>	
   // this runs when the page is done loading.
   var meritBadges = false;
   var allUserData = false;
   var thisUserData = false;
+  var sessionUser = false;
+  
+  
+  function getSessionUser(callback){
+    sessionUser = false;
+    $(".sessionUserNetID").text("");
+    google.script.run
+      .withFailureHandler(function(error){console.log(error);})
+      .withSuccessHandler(function(netid){
+        console.log("session User");
+        console.log(netid);
+        if(netid.trim() != ""){
+          var searched_array = allUserData.userData.data.filter(function(a){
+            if(netid.toLowerCase() == a.netid.toLowerCase()){
+              return true;
+            } else {
+              return false;
+            }
+          });
+          sessionUser = searched_array[0];
+          if(sessionUser.role.toLowerCase() == "manager" ||
+            sessionUser.role.toLowerCase() == "staff" ||
+            sessionUser.role.toLowerCase() == "trusted faculty" ||
+            sessionUser.role.toLowerCase() == "authorized faculty" ||
+            sessionUser.role.toLowerCase() == "volunteer"){
+            sessionUser.visitorEditPriv = true;
+          }else{
+            sessionUser.visitorEditPriv = false;
+          }
+          
+        }else{
+          sessionUser = false; 
+        }
+        console.log(sessionUser);
+        if(callback){callback();}
+    }).getCurrentSessionNetId();  
+  }
+  
+  function updateAppForSessionUser(){
+    if(sessionUser.netid){
+      $(".sessionUserNetID").text(sessionUser.netid);
+    }else{
+       $(".sessionUserNetID").text("anonymouse");
+    }
+    if(sessionUser.visitorEditPriv){
+      $(".visitorEditPriv").show();
+    }else{
+      $(".visitorEditPriv").hide();
+    } 
+    initDisplay();
+  }
   
   function getMeritBadges(callback){
     google.script.run
@@ -245,17 +296,23 @@
       var checkElem = $("<li class='meritBadgeCheck hasMeritBadge'  data-hasMeritBadge='unknown' data-badgeName='"+meritBadge+"'><span class='hasNoHas'>dunno</span> <span class='meritBadgeText'>"+meritBadge+"</span></li>");
       if(thisUserData[meritBadge] && thisUserData[meritBadge].toLowerCase()== "yes"){
         $(checkElem).addClass("hasMeritBadge");
+        $(checkElem).addClass("active");
         $(checkElem).data('hasMeritBadge', true);
         $(".hasNoHas",checkElem).text("Has");
       }else{
         $(checkElem).addClass("noHasMeritBadge");
+        $(checkElem).addClass("inactive");
+        
         $(checkElem).data('hasMeritBadge', false);
         $(".hasNoHas",checkElem).text("No Has");
       }
       $(".userMeritBadgeList").append(checkElem);
-
     });
     $(".meritBadgeCheck").click(function(evt){
+        
+      if(!sessionUser || !sessionUser.visitorEditPriv){
+        return false;
+      }
       console.log("clicked");
       console.log($(this).data("hasMeritBadge"));
       var meritBadge = $(".meritBadgeText", this).text().trim();
@@ -263,13 +320,17 @@
       if($(this).data("hasMeritBadge")){
         $(".hasNoHas", this).text("No Has");
         $(this).removeClass("hasMeritBadge");
+        $(this).removeClass("active");
         $(this).addClass("noHasMeritBadge");
+        $(this).addClass("inactive");
         $(this).data('hasMeritBadge', false);
         thisUserData[meritBadge] = "No";
       }else{
         $(".hasNoHas", this).text("Has");
         $(this).removeClass("noHasMeritBadge");
+        $(this).removeClass("inactive");
         $(this).addClass("hasMeritBadge");
+        $(this).addClass("active");
         $(this).data('hasMeritBadge', true);
         thisUserData[meritBadge] = "Yes";
       }
@@ -279,13 +340,37 @@
         .withFailureHandler(function(error){console.log(error);})
         .withSuccessHandler(function(data){
           console.log(data);
-        }).updateUserData(thisUserData.netid, thisUserData);
-        return false;
+      }).updateUserData(thisUserData.netid, thisUserData);
+        
+      return false;
     });
   }
   
+  
+  function initDisplay(){
+    $(".appSection").hide();
+    if(!thisUserData){
+      $(".userLookup").show();
+    }
+    
+    $(".showVisitorLookup").click(function(){showVisitorLookup(); return false;});
+    $(".showMeritBadgeEdit").click(function(){showMeritBadgeEdit(); return false;});
+  }
+  
+  function showVisitorLookup(){
+    $(".appSection").hide();
+    $(".userLookup").show();
+  }
+  
+  function showMeritBadgeEdit(){
+    $(".appSection").hide();
+    $(".meritBadgeEdit").show();
+  }
+  
   $(function() {
-    getAllUserData();    
+
+    initDisplay();
+    getAllUserData(function(){ getSessionUser(updateAppForSessionUser);});    
     getMeritBadges();
     
     $("#visitorSearch").submit(function(){

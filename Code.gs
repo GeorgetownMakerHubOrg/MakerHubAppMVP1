@@ -30,7 +30,9 @@ This functions gets called when the pages loads every time.
 */
 function doGet(e) {
   Logger.log("Opening page...");  
-  return HtmlService.createTemplateFromFile('index').evaluate();
+  var html = HtmlService.createTemplateFromFile('index').evaluate();
+  html.addMetaTag('viewport', 'width=device-width, initial-scale=1');
+  return html;
 }
 
 /*

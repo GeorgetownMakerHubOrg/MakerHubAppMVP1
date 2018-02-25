@@ -352,6 +352,8 @@ $(function()
 	/**/
 	$('#mobile-nav').on('click', '.switcher', function()
 	{
+    
+    console.log("clicked");
 		elem = $(this);
 		elem.toggleClass('opened');
 		
@@ -365,6 +367,7 @@ $(function()
 		}
 		return false;
 	});
+    
 	$('#mobile-nav').on('click', '.opener', function()
 	{
 		elem = $(this);
@@ -381,6 +384,12 @@ $(function()
 	});
 	
 	
+    $(".dontopenurl").click(function(){
+      // making sure a tags dont' try to open the url (this is a one-page app)
+      console.log("clicked");
+      return false;
+    });
+    
 	/**/
 	/* portfolio */
 	/**/
