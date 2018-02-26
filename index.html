@@ -69,7 +69,7 @@
 					<div class="grid-row">
 						<!-- logo -->
 						<a href="index.html" class="logo">
-							<img src="#" alt=""> <!--Maker hub logo should come here-->
+							<img src="#" alt="" class="logoimage" width='64'> <!--Maker hub logo should come here-->
 						</a>
                         <div class="sessionUserInfo">
                         Logged In: <span class="sessionUserNetID">anonymous</span>
@@ -87,8 +87,9 @@
 									</ul>
 								</li>
                                 -->
-								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup">Visitor Lookup</a></li>							
-								<li class="visitorEditPriv"><a href="#" class="showMeritBadgeEdit">Merit Badges</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup menuitem">Visitor Lookup</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="showMeritBadgeEdit menuitem ifVisitorPresent">Merit Badges</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="resetVisitor menuitem ifVisitorPresent">Reset Visitor</a></li>							
 <!--								<li><a href="#" class="dontopenurl">Contacts</a></li> -->
 							</ul>
 						</nav>
@@ -98,10 +99,11 @@
 						<nav id="mobile-nav" class="mobile-nav">
 							<a href="#mobile-nav-1" class="switcher"><i class="fa fa-align-justify"></i></a>
 							<ul id="mobile-nav-1">
-								<li><a href="#" class="dontopenurl active">Home</a></li>
+								<li><a href="#" class="dontopenurl active menuitem">Home</a></li>
 <!--								<li><a href="#mobile-nav-2" class="opener"><i class="fa fa-angle-right"></i>Menu With Sub Menus</a></li> -->
-								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup">Visitor Lookup</a></li>							
-								<li class="visitorEditPriv"><a href="#" class="showMeritBadgeEdit">Merit Badges</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup menuitem">Visitor Lookup</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="showMeritBadgeEdit menuitem ifVisitorPresent">Merit Badges</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="resetVisitor menuitem ifVisitorPresent">Reset Visitor</a></li>							
                                 
 							</ul>
                             <!--
@@ -279,11 +281,16 @@
         return false;
       }
     });
-    thisUserData = searched_array[0];
-    console.log(thisUserData);  
-    showUserMeritBadgeScreen();
-    
-    $(".userName").text(thisUserData.name);
+    if(searched_array.length > 0){
+      thisUserData = searched_array[0];
+      console.log(thisUserData);  
+      showUserMeritBadgeScreen();  
+      $(".userName").text(thisUserData.name);
+      $(".ifVisitorPresent").show();
+    }else{
+      // show "not found" 
+      $(".userName").text("netId " + netid +  " not found");
+    }
   }
   
   
@@ -349,12 +356,20 @@
   
   function initDisplay(){
     $(".appSection").hide();
+    
+    
     if(!thisUserData){
       $(".userLookup").show();
+      $(".ifVisitorPresent").hide();
     }
-    
+    /*
+    $(".showVisitorLookup").off("click");
+    $(".showMeritBadgeEdit").off("click");
+    $(".resetVisitor").off("click");
+    */
     $(".showVisitorLookup").click(function(){showVisitorLookup(); return false;});
     $(".showMeritBadgeEdit").click(function(){showMeritBadgeEdit(); return false;});
+    $(".resetVisitor").click(function(){resetVisitor(); return false;});
   }
   
   function showVisitorLookup(){
@@ -367,16 +382,48 @@
     $(".meritBadgeEdit").show();
   }
   
+  function resetVisitor(){
+    $(".userName").text("");
+    $("#netidinput").val("")
+    thisUserData = false;
+    initDisplay();
+  }
+  
+  var imageUrls = {};
+  function placeImageAt(imagename, selector){
+    google.script.run.withSuccessHandler(function(url){
+    console.log("got result");
+    console.log(url);
+      if(url){
+        imageUrls[imagename] = url;
+        $(selector).attr("src",url);
+      }else{
+        console.log("image " + imagename + " not found");
+        $(selector).remove();
+        
+      }
+    }).getImageUrl(imagename);
+  }  
+  
+  
+  function placeImages(){
+    placeImageAt("MakerHubLogoBlue.png", ".logoimage");
+  }
+  
   $(function() {
 
     initDisplay();
     getAllUserData(function(){ getSessionUser(updateAppForSessionUser);});    
     getMeritBadges();
     
+    placeImages();
+    
     $("#visitorSearch").submit(function(){
       console.log("searching");
       var netid = $("#netidinput").val();
-      getThisUserData(netid);
+      try{
+        getThisUserData(netid);
+      }catch(e){}
       return false;     
     });
     /*

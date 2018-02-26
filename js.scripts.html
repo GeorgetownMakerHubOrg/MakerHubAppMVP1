@@ -375,6 +375,13 @@ $(function()
 		$(elem.attr('href')).addClass('opened');
 		return false;
 	});
+    
+    $(".menuitem").click(function(){
+        console.log("triggering");
+        $(".switcher").trigger("click");
+        return false;
+    });
+    
 	$('#mobile-nav').on('click', '.back', function()
 	{
 		elem = $(this);
