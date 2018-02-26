@@ -1,4 +1,17 @@
 // these are the functions you can call from the html pages using google.script.run
+
+///// Get Current User informations
+function getCurrentSessionNetId() {
+  var email = Session.getActiveUser().getEmail();
+  Logger.log(email);
+  var user = "";
+  if(email.trim() != ""){
+    user = email.split("@")[0];
+  }
+  return user;
+}
+
+
 function getUserData(filter, sort){
   var userlist = {};
   var allUserData = userTable
