@@ -211,3 +211,12 @@ function findRowNumForQuery(table, keysRow, startRow, queryFunction){
   }
   return false;
 }
+
+
+function getImageUrl(imagename){
+  var results = PicasaApp.find(imagename);
+  if(results.length > 0){
+    return results[0].getUrl();
+  }
+  return false;
+}
