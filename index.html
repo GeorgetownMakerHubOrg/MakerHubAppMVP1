@@ -281,12 +281,16 @@
         return false;
       }
     });
-    thisUserData = searched_array[0];
-    console.log(thisUserData);  
-    showUserMeritBadgeScreen();
-    
-    $(".userName").text(thisUserData.name);
-    $(".ifVisitorPresent").show();
+    if(searched_array.length > 0){
+      thisUserData = searched_array[0];
+      console.log(thisUserData);  
+      showUserMeritBadgeScreen();  
+      $(".userName").text(thisUserData.name);
+      $(".ifVisitorPresent").show();
+    }else{
+      // show "not found" 
+      $(".userName").text("netId " + netid +  " not found");
+    }
   }
   
   
@@ -380,6 +384,7 @@
   
   function resetVisitor(){
     $(".userName").text("");
+    $("#netidinput").val("")
     thisUserData = false;
     initDisplay();
   }
@@ -416,7 +421,9 @@
     $("#visitorSearch").submit(function(){
       console.log("searching");
       var netid = $("#netidinput").val();
-      getThisUserData(netid);
+      try{
+        getThisUserData(netid);
+      }catch(e){}
       return false;     
     });
     /*
