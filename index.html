@@ -90,6 +90,7 @@
 								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup menuitem">Visitor Lookup</a></li>							
 								<li class="visitorEditPriv"><a href="#" class="showMeritBadgeEdit menuitem ifVisitorPresent">Merit Badges</a></li>							
 								<li class="visitorEditPriv"><a href="#" class="resetVisitor menuitem ifVisitorPresent">Reset Visitor</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="showFeatureRequest menuitem">Feature Request</a></li>	                                
 <!--								<li><a href="#" class="dontopenurl">Contacts</a></li> -->
 							</ul>
 						</nav>
@@ -104,6 +105,7 @@
 								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup menuitem">Visitor Lookup</a></li>							
 								<li class="visitorEditPriv"><a href="#" class="showMeritBadgeEdit menuitem ifVisitorPresent">Merit Badges</a></li>							
 								<li class="visitorEditPriv"><a href="#" class="resetVisitor menuitem ifVisitorPresent">Reset Visitor</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="showFeatureRequest menuitem">Feature Request</a></li>							
                                 
 							</ul>
                             <!--
@@ -155,7 +157,7 @@
 					   	</section>
 		               
 		     
-		               	<section class="appSection ft-Wrapper visitorEditPriv meritBadgeEdit" id=" userinformation"> <!--YOU NEED TO PUT A FUNCTION TO HIDE "userinformation" SECTION WHEN ITS NOT RUN-->
+		               	<section class="appSection ft-Wrapper visitorEditPriv meritBadgeEdit" id="meritbadgelist"> <!--YOU NEED TO PUT A FUNCTION TO HIDE "userinformation" SECTION WHEN ITS NOT RUN-->
 							<div class="grid-row composer">
 								<br />
 								<br />
@@ -169,6 +171,36 @@
 								</div>
 							</div>
 						</section>		
+                        
+		               	<section class="appSection ft-Wrapper visitorEditPriv featureRequest" id="featurerequest"> <!--YOU NEED TO PUT A FUNCTION TO HIDE "userinformation" SECTION WHEN ITS NOT RUN-->
+							<div class="grid-row composer">
+								<br />
+								<div class="columns-row">
+                                  	<div class="columns-col columns-col-9 wow fadeInLeft">
+										<h3>Feature Request</h3>
+										<ul class="list userMeritBadgeList" data-wow-delay="0.3s">									
+										</ul>	
+										<br><br>						
+									</div>						
+								</div>
+                                <div class="columns-row">
+                                  	<div class="columns-col columns-col-9 wow fadeInLeft">
+										<input type=text name="featureTitle" placeholder="Feature Title" size="40" class="inputfield" id="featureRequestTitle" />
+                                        <BR>
+                                        <textarea name="featureDescription" placeholder="Description" rows="5" cols="40" class="inputfield" id="featureRequestDescription"></textarea>
+                                        <BR>
+                                    </div>
+                                </div>
+                                <div class="columns-row">
+                                  	<div class="columns-col columns-col-4 wow fadeInLeft">
+                                        <button id="featureRequestSubmit" class="submitbutton">Submit</button>
+                                    </div>
+                                  	<div class="columns-col columns-col-5 wow fadeInLeft">
+                                        <span class="featuresubmitresult"></span>					
+									</div>	                                
+                                </div>
+							</div>
+						</section>
 						
 						<!-- page footer bottom -->
 						<footer class="page-footer-bottom">
@@ -354,6 +386,31 @@
   }
   
   
+  function showFeatureRequestScreen(){
+    $(".appSection").hide();
+    $(".featuresubmitresult").text("");
+    $("#featureRequestTitle").val("");
+    $("#featureRequestDescription").val("");
+    $(".featureRequest").show();
+    $("#featureRequestSubmit").off("click");
+    
+    $("#featureRequestSubmit").click(function(){
+      console.log("submitting");
+      $(".featuresubmitresult").text("Submitting...");
+      var title = $("#featureRequestTitle").val();
+      var description = $("#featureRequestDescription").val();
+      google.script.run
+        .withFailureHandler(function(error){console.log(error);})
+        .withSuccessHandler(function(data){
+          console.log("submitted");
+          $(".featuresubmitresult").text("Thanks!");
+          console.log(data);
+      }).postTrelloFeatureRequest(title, description);      
+      
+    });
+  
+  }
+  
   function initDisplay(){
     $(".appSection").hide();
     
@@ -369,6 +426,7 @@
     */
     $(".showVisitorLookup").click(function(){showVisitorLookup(); return false;});
     $(".showMeritBadgeEdit").click(function(){showMeritBadgeEdit(); return false;});
+    $(".showFeatureRequest").click(function(){showFeatureRequestScreen(); return false;});
     $(".resetVisitor").click(function(){resetVisitor(); return false;});
   }
   
