@@ -1,0 +1,33 @@
+<script>
+  function showFeatureRequestScreen(){
+    $(".appSection").hide();
+    $(".featuresubmitresult").text("");
+    $("#featureRequestTitle").val("");
+    $("#featureRequestDescription").val("");
+    $(".featureRequest").show();
+    $("#featureRequestSubmit").off("click");
+    
+    $("#featureRequestSubmit").click(function(){
+      console.log("submitting");
+      $(".featuresubmitresult").text("Submitting...");
+      var title = $("#featureRequestTitle").val();
+      var description = $("#featureRequestDescription").val();
+      google.script.run
+        .withFailureHandler(function(error){console.log(error);})
+        .withSuccessHandler(function(data){
+          console.log("submitted");
+          $(".featuresubmitresult").text("Thanks!");
+          console.log(data);
+      }).postTrelloFeatureRequest(title, description);      
+      
+    });
+  
+  }
+
+$(function() {
+    $(".showFeatureRequest").click(function(){showFeatureRequestScreen(); return false;});
+
+});
+</script>
+
+
