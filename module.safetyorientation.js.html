@@ -1,0 +1,65 @@
+<script>
+
+$(function() {
+
+  console.log("safety");
+
+  var safetyOrientationData = false;
+  var safetyOrientationSections = [];
+  
+  function getSafetyOrientationData(){
+    console.log("getting safety");
+    google.script.run
+    .withFailureHandler(function(msg){
+      console.log("error");
+      console.log(msg);
+    
+    })
+    .withSuccessHandler(function(data){
+      console.log("got safety");
+      safetyOrientationData = data.data;
+      var temp = [];
+      $.each(safetyOrientationData, function(index, s){
+        temp.push(s.section);
+      });
+      safetyOrientationSections = Array.from(new Set(temp));
+    })
+    .getSafetyOrientationData();
+  }
+ 
+  function showSafetyOrientationScreen(){
+    $(".appSection").hide();
+    $(".safetyOrientation").show();
+
+  }
+
+
+  
+  $(".showSafetyOrientation").click(function(){
+    showSafetyOrientationScreen(); 
+    $(".switcher","#safetyMobileNav").addClass("closed").removeClass("opened");
+    return false;
+  });
+  
+   $('#safety-mobile-nav').on('click', '.switcher', function()
+   {
+      console.log("clicked");
+      elem = $(this);
+	  elem.toggleClass('opened');		
+	  if( elem.hasClass('opened') )
+	  {
+		$(elem.attr('href')).addClass('opened');
+	  }
+	  else
+      {
+        $('#safety-mobile-nav ul').removeClass('opened').removeClass('closed');
+      }
+	  return false;
+	});
+    
+    getSafetyOrientationData();
+
+
+});
+</script>
+

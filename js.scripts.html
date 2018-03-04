@@ -378,7 +378,7 @@ $(function()
     
     $(".menuitem").click(function(){
         console.log("triggering");
-        $(".switcher").trigger("click");
+        $(".switcher",$(this).closest("nav")).trigger("click");
         return false;
     });
     
