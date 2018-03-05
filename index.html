@@ -10,6 +10,7 @@
 		  <?!= include("css.owl.carousel"); ?>
 		  <?!= include("css.animate"); ?> 
 		  <?!= include("STYLESHEET"); ?>   
+		  <?!= include("module.safetyorientation.css"); ?>   
 
 
 		<script
@@ -78,7 +79,7 @@
 						<!-- main nav -->
 						<nav class="main-nav">
 							<ul>
-								<li><a href="#" class="active dontopenurl">Home</a></li>
+<!--								<li><a href="#" class="active dontopenurl">Home</a></li>-->
                                 <!--
 								<li><a href="#">Sub Menus</a>
 									<ul>
@@ -91,6 +92,7 @@
 								<li class="visitorEditPriv"><a href="#" class="resetVisitor menuitem ifVisitorPresent">Reset Visitor</a></li>							
 <?!= include("module.featurerequest.menu"); ?>
 <?!= include("module.meritbadges.menu"); ?>
+<?!= include("module.safetyorientation.menu"); ?>
 							</ul>
 						</nav>
 						<!--/ main nav -->
@@ -99,12 +101,14 @@
 						<nav id="mobile-nav" class="mobile-nav">
 							<a href="#mobile-nav-1" class="switcher"><i class="fa fa-align-justify"></i></a>
 							<ul id="mobile-nav-1">
-								<li><a href="#" class="dontopenurl active menuitem">Home</a></li>
+<!--								<li><a href="#" class="dontopenurl active menuitem">Home</a></li>-->
 <!--								<li><a href="#mobile-nav-2" class="opener"><i class="fa fa-angle-right"></i>Menu With Sub Menus</a></li> -->
 								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup menuitem">Visitor Lookup</a></li>							
 								<li class="visitorEditPriv"><a href="#" class="resetVisitor menuitem ifVisitorPresent">Reset Visitor</a></li>							
 <?!= include("module.meritbadges.menu"); ?>
 <?!= include("module.featurerequest.menu"); ?>
+<?!= include("module.safetyorientation.menu"); ?>
+
                                 
 							</ul>
                             <!--
@@ -159,6 +163,7 @@
 	
                   <?!= include("module.meritbadges.section"); ?>      
                   <?!= include("module.featurerequest.section"); ?>      
+                  <?!= include("module.safetyorientation.section"); ?>      
 		             	
 						<!-- page footer bottom -->
 						<footer class="page-footer-bottom">
@@ -367,6 +372,7 @@
   <?!=include("js.scripts");?>
   <?!=include("module.featurerequest.js");?>
   <?!=include("module.meritbadges.js");?>
+  <?!=include("module.safetyorientation.js");?>
     
   </body>
 </html>

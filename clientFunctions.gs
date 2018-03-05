@@ -12,6 +12,21 @@ function getCurrentSessionNetId() {
 }
 
 
+function getSafetyOrientationData(){
+    var userlist = {};
+  var allSafetyData = safetyTable
+  .getActiveSheet()
+  .getDataRange()
+  .getValues();
+ 
+  var safetyData = dataIntoHashRows(allSafetyData, 0, 1); //, function(row){ return row['NetId'] == netId;}).data;  
+  
+  Logger.log(safetyData);
+    
+  return JSON.parse(JSON.stringify(safetyData));
+
+}
+
 function getUserData(filter, sort){
   var userlist = {};
   var allUserData = userTable

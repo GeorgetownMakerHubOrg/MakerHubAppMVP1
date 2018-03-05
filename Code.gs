@@ -1,5 +1,6 @@
 /* Variables */
 var userTable = SpreadsheetApp.openById(getUserTableId());
+var safetyTable = SpreadsheetApp.openById(getSafetyTableId());
 
 var MeritBadges = [
   'Laser Cutter',

@@ -1,0 +1,159 @@
+<script>
+
+$(function() {
+
+  console.log("safety");
+
+  var safetyOrientationData = false;
+  var safetyOrientationSections = [];
+  
+  function getSafetyOrientationData(){
+    console.log("getting safety");
+    google.script.run
+    .withFailureHandler(function(msg){
+      console.log("error");
+      console.log(msg);
+    
+    })
+    .withSuccessHandler(function(data){
+      console.log("got safety");
+      safetyOrientationData = data.data;
+      var temp = [];
+      $.each(safetyOrientationData, function(index, s){
+        temp.push(s.section);
+      });
+      safetyOrientationSections = Array.from(new Set(temp));
+    })
+    .getSafetyOrientationData();
+  }
+ 
+  function showSafetyOrientationScreen(){
+    $(".appSection").hide();
+    $(".safetyOrientation").show();
+    $("#safety-mobile-nav-1").empty();
+    $(".safetyOrientationSectionTitle").empty();
+    $(".safetyOrientationSectionHeader").empty();
+    $(".safetyOrientationSectionRisks").empty();
+    $(".safetyOrientationSectionList").empty();
+    $(".safetyOrientationSectionFooter").empty();
+    
+      
+    $.each(safetyOrientationSections, function(index, sectionname){
+      var sectionli = $("<li data-sectionname='"+sectionname+"' ><a href='#' class='menuitem'>"+sectionname+"</a></li>").appendTo("#safety-mobile-nav-1");
+      $(sectionli).click(function(){
+        try{
+          var clickedname = $(this).data("sectionname");
+          $(".switcher",$(this).closest("nav")).trigger("click");        
+          console.log("clicked " + clickedname);
+          showSection(clickedname);
+        }catch(e){
+          console.log(e);
+        }
+        return false;
+      });
+    });
+  }
+  
+  function showSection(sectionname){
+  
+
+    $(".safetyOrientationSectionTitle").text(sectionname);
+    $(".safetyOrientationSectionHeader").empty();
+    $(".safetyOrientationSectionRisks").empty();
+    $(".safetyOrientationSectionList").empty();
+    $(".safetyOrientationSectionFooter").empty();
+  
+    var sectionrows = safetyOrientationData.filter(function(a){
+      return ( a.section == sectionname && (typeof a.number == "number" || !a.number.match(/[^0-9]/)));
+    });
+    sectionrows.sort(function(a,b){
+      return a.number > b.number;
+    });
+    $.each(sectionrows, function(index, row){
+      var footnotetext = "";
+      if(row.footnote){
+        footnotetext = "<br><i>"+row.footnote+"</i>";
+      }
+      $(".safetyOrientationSectionList").append("<li class='safetyrule'><i class='fa fa-bullhorn'></i> "+row.text+footnotetext+"</li>");
+    });
+    
+    
+    var headerrows =  safetyOrientationData.filter(function(a){
+      return a.section == sectionname && typeof a.number == "string" && a.number.trim() == "header";
+    });
+    console.log("header");
+    console.log(headerrows);
+    $.each(headerrows, function(index, row){
+      var footnotetext = "";
+      if(row.footnote){
+        footnotetext = "<br><i>"+row.footnote+"</i>";
+      }
+      $(".safetyOrientationSectionHeader").append("<li class='safetyheader'>"+row.text+footnotetext+"</li>");
+    }); 
+    
+    var risksrows =  safetyOrientationData.filter(function(a){
+      return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "risks";
+    });  
+    $.each(risksrows, function(index, row){
+      var footnotetext = "";
+      if(row.footnote){
+        footnotetext = "<br><i>"+row.footnote+"</i>";
+      }
+      $(".safetyOrientationSectionRisks").append("<li class='safetyrisks'><B>Risks Include:</b> "+row.text+footnotetext+"</li>");
+    });    
+    
+    var footerrows =  safetyOrientationData.filter(function(a){
+      return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "footer";
+    });
+    $.each(footerrows, function(index, row){
+      var footnotetext = "";
+      if(row.footnote){
+        footnotetext = "<br><i>"+row.footnote+"</i>";
+      }
+      $(".safetyOrientationSectionFooter").append("<li class='safetyfooter'> "+row.text+footnotetext+"</li>");
+    });
+    
+    var footerlargerows =  safetyOrientationData.filter(function(a){
+      return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "footerlarge";
+    });
+    $.each(footerlargerows, function(index, row){
+      var footnotetext = "";
+      if(row.footnote){
+        footnotetext = "<br><i>"+row.footnote+"</i>";
+      }
+      $(".safetyOrientationSectionFooterLarge").append("<li class='safetyfooter'> "+row.text+footnotetext+"</li>");
+    });
+    
+
+  }
+
+
+  
+  $(".showSafetyOrientation").click(function(){
+    $(".switcher","#safetyMobileNav").addClass("closed").removeClass("opened");
+    showSafetyOrientationScreen(); 
+    return false;
+  });
+  
+   $('#safety-mobile-nav').on('click', '.switcher', function()
+   {
+      console.log("clicked");
+      elem = $(this);
+	  elem.toggleClass('opened');		
+	  if( elem.hasClass('opened') )
+	  {
+		$(elem.attr('href')).addClass('opened');
+	  }
+	  else
+      {
+        $('#safety-mobile-nav ul').removeClass('opened').removeClass('closed');
+      }
+	  return false;
+	});
+    
+    getSafetyOrientationData();
+
+
+});
+</script>
+
