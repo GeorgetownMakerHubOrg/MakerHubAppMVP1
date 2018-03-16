@@ -46,6 +46,31 @@ function include(filename) {
       .getContent();
 }
 
+/*
+=============================== INCLUDEMODULES ====================================
+this function let you include ALL the modules for a particular section
+============================================================================
+*/
+
+function includeModules(section){
+  var sectionContent = ""; 
+  var modules = getModules();
+  for (var i = 0 ; i < modules.length; i++){
+    var module = modules[i];
+    var modeleSectionFilename = "module."+module+"."+section;
+    try{
+      var moduleSectionContent = HtmlService.createHtmlOutputFromFile(modeleSectionFilename)
+        .getContent();
+      sectionContent += moduleSectionContent;
+    }catch(e){
+      Logger.log("ERROR IN includeModule");
+      Logger.log(e);
+    }
+  }
+  return sectionContent;
+}
+
+
 /* 
 =========================== DATAINTOHASHROWS ===============================
 Any time you get some rows from a google sheet, run it through this function
