@@ -1,0 +1,96 @@
+<script src="https://cdn.rawgit.com/thanashyam/2309671/raw/5168575d69cd84588c52aa183dbfb3d932b9d4f9/jquery.md5.js"></script>
+
+<script>
+
+$(function() {
+
+  function showUserRegistrationScreen(){
+     $(".appSection").hide();
+     $(".userRegistration").show();
+     $(".formelem",".userRegistrationContent").val("");
+     $(".registrationMessage").empty();
+     $(".registrationError").empty();
+
+  }
+
+
+  $(".checkboxitem").click(function(){
+    var checkbox = $(".checkbox", this);
+    console.log($(checkbox).prop("checked"));
+    $(".checkyesno", this).text($(checkbox).prop("checked") ? "Yes" : "No");
+  });
+
+
+  $("#userRegistrationSubmit").click(function(){
+    console.log("submit");
+    $(".registrationMessage").empty();
+    $(".registrationError").empty();
+    
+    var user = {};
+    var errors = [];
+    $(".formelem", ".userRegistrationContent").each(function(index){
+      var colname = $(this).data("colname");
+      var val = $(this).val();
+      var required = $(this).data("required");
+      
+      if(required && val.trim() == ""){
+        errors.push("Field '" + $(this).attr('name') + "' is required");
+      }
+      
+      if($(this).attr("type") == "checkbox"){
+        val = ($(this).prop("checked") == "TRUE" ? "Yes" : "No");
+      }
+      if(colname == "swipemd5"){
+        // encrypt netid
+        val = $.md5(val + "Shift");
+      }
+      user[colname] = val;
+    });
+    
+    var found = findUser(user.netid);
+    if(found){
+      errors.push("User with netid " + user.netid + " already in system");
+    }
+    if(errors.length > 0){
+      registrationError(errors.join("<BR>"));  
+      return false;
+    }
+
+    // insert user into table
+    google.script.run.withSuccessHandler(function(response){
+      console.log(response);
+      $(this).off("keydown");
+      registrationComplete(user);
+    })
+    .withFailureHandler(function(message){
+      console.log(message);
+      registrationError(message);
+    })
+    .insertUserData(user);
+    
+    return false;
+    
+  });
+
+  function registrationComplete(user){
+    // reload all users
+    getAllUserData(function(){ 
+      $(".registrationMessage").text("Registration Complete!");
+      getSessionUser(updateAppForSessionUser);
+      getThisUserData(user.netid);
+    });    
+  }
+  
+  function registrationError(message){
+    $(".registrationError").html("Registration Error: " +message);
+  
+  }
+
+
+  $(".showUserRegistration").click(function(){
+    showUserRegistrationScreen(); 
+    return false;
+  });
+});
+
+</script>

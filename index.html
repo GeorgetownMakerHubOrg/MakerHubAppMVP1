@@ -10,8 +10,7 @@
 		  <?!= include("css.owl.carousel"); ?>
 		  <?!= include("css.animate"); ?> 
 		  <?!= include("STYLESHEET"); ?>   
-		  <?!= include("module.safetyorientation.css"); ?>   
-
+          <?!= includeModules("css"); ?>
 
 		<script
 		  src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -284,6 +283,22 @@
     }
   }
   
+  
+  function findUser(netid){
+    var searched_array = allUserData.userData.data.filter(function(a){
+      if(netid.toLowerCase() == a.netid.toLowerCase()){
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if(searched_array.length > 0){
+      var user = searched_array[0];
+      return user;
+    }else{
+      return false;
+    }
+  }
   
 
   
