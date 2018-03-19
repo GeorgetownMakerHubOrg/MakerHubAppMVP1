@@ -1,0 +1,65 @@
+<section class="appSection ft-Wrapper visitorEditPriv userRegistration" id="userRegistrationSection"> <!--YOU NEED TO PUT A FUNCTION TO HIDE "userinformation" SECTION WHEN ITS NOT RUN-->
+  <div class="grid-row composer">
+    <br />
+    <br />
+    <div class="columns-row">
+      <header id="page-header-bottom" class="page-header-bottom">
+	    <div class="grid-row">
+          <h3>New User Registration</h3>
+        </div>
+      </header>
+      <div class="columns-col columns-col-9 wow fadeInLeft userRegistrationContent">
+        <div class="inputitem"><input class="inputtext longerinput formelem place1" data-required="true" data-place="1" data-colname="name" type="text" name="name" id="username" size="30" placeholder="Name"/></div>
+        <div class="inputitem"><input class="inputtext longerinput formelem place1" data-required="true"  data-place="2" data-colname="netid" type="text" name="netid" id="usernetid" size="30" placeholder="NeID (letters and numbers)"/></div>
+        <div class="inputitem"><input class="inputtext longerinput formelem place1"  data-required="true" data-place="3" data-colname="swipemd5" type="text" name="guid" id="userguid" size="30" placeholder="GUID (number on your GO Card)"/></div>
+        <div class="inputitem">
+          <select class="custom-select required formelem place2"   data-required="true"  data-place="4" data-colname="role" name="role" id="userrole">
+            <option selected value="">Maker Hub Role</option>
+            <option value="Visitor">Visitor</option>
+            <option value="Staff">Staff</option>
+            <option value="Manager">Manager</option>
+            <option value="Volunteer">Volunteer</option>
+            <option value="Trusted Faculty">Authorized Faculty</option>
+          </select>
+        </div>
+        <div class="inputitem">
+          <select class="custom-select required  formelem place3"  data-required="true"  data-colname="status" data-place="5" name="status" id="userstatus">
+            <option selected value="">Academic Status</option>
+            <option value="Undergraduate">Undergraduate</option>
+            <option value="Graduate">Graduate</option>
+            <option value="Faculty">Faculty</option>
+            <option value="Staff">Staff</option>
+            <option value="Alumni">Alumni</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="inputitem">
+            <input class="inputtext longerinput  formelem place4"  data-place="6" data-colname="school" type="text" name="school" id="userschool" size=30 placeholder="School/Dept (or N/A)"/>
+        </div>
+        <div class="inputitem">
+            <input class="inputtext longerinput formelem place5"  data-place="7" data-colname="year" type="text" name="year" id="useryear" size=30 placeholder="Year of Graduation (or N/A)"/>
+        </div>
+        <div class="inputitem inputmailinglist checkboxitem">
+            <input id="usermailinglist" class="formelem checkbox" type="checkbox" data-colname="mailinglist" name="mailinglist" value="Yes" /> 
+            <label class="niceoval usermailinglist" for="usermailinglist">Put me on the Mailing List: <span id="mailinglistyesno" class="checkyesno">No</span></label>
+        </div>
+        <div class="inputitem inputsafetyorientation checkboxitem">
+            <input id="usersafetyorientation"  class="formelem checkbox" type="checkbox" data-colname="Received Safety Orientation" name="safetyorientation" value="Yes" /> 
+            <label class="niceoval usersafetyorientation" for="usersafetyorientation">Received Safety Orientation: <span id="safetyorientationyesno" class="checkyesno">No</span></label>
+        </div>
+        <div class="inputitem inputsafetywaiver checkboxitem">
+            <input id="usersafetywaiver"  class="formelem checkbox"  type="checkbox" data-colname="Signed Safety Waiver" name="safetywaiver" value="Yes" /> 
+            <label class="niceoval usersafetywaiver" for="usersafetywaiver">Signed Safety Waiver: <span id="safetywaiveryesno" class="checkyesno">No</span></label>
+        </div>
+        <div class="inputitem submitnewuser niceoval">
+          <button id="userRegistrationSubmit">Submit</button>
+        </div>
+        <div class="registrationError"></div>
+        <div class="registrationMessage"></div>
+      </div>						
+    </div>
+  </div>
+</section>
+
+
+

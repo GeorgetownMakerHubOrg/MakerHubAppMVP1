@@ -2,7 +2,8 @@ function getModules() {
   var modules = [
     "featurerequest",
     "meritbadges",
-    "safetyorientation"    
+    "safetyorientation",
+    "userregistration"
     ];
   
   return modules;
