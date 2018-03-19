@@ -67,7 +67,7 @@ $(function() {
       return ( a.section == sectionname && (typeof a.number == "number" || !a.number.match(/[^0-9]/)));
     });
     sectionrows.sort(function(a,b){
-      return a.number > b.number;
+      return parseInt(a.number.toString()) -  parseInt(b.number.toString());
     });
     $.each(sectionrows, function(index, row){
       var footnotetext = "";
