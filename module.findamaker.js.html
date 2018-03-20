@@ -1,0 +1,98 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment-with-locales.min.js"
+    crossorigin="anonymous"></script>
+<script>
+
+$(function() {
+
+  var staffSchedules = [];
+  moment().format();
+  
+  var now = moment();
+  var startTime = moment(now).add(-5, "minutes");
+  var endTime = moment(now).add(14, "days");
+    
+
+  $(".showFindAMaker").click(function(){
+    showFindAMakerScreen();
+  });
+
+
+  function getStaffSchedules(){
+    google.script.run
+    .withFailureHandler(function(message){
+      console.log("error " + message);
+    })
+    .withSuccessHandler(function(data){
+      staffSchedules = data;
+      console.log(data);
+    })
+    .getStaffScheduleEvents(startTime.toString(), endTime.toString());
+  }
+
+
+  function showFindAMakerScreen(){
+     $(".appSection").hide();
+     $(".findAMaker").show();
+     console.log(meritBadges);
+     
+     var sourceelem = $(".findAMakerTemplate").clone(true);
+     $(sourceelem).removeClass("findAMakerTemplate");
+     $(".findAMakerTemplate").hide();
+     var i = 0;
+     $.each(meritBadges, function(elem, badge){
+       i++;
+       var elem = $(sourceelem).clone(true);
+       $("#collapseN", elem).attr("aria-labelledby","headingN"+i);
+       $("#collapseN", elem).attr("id","collapseN"+i);
+       $("#headingN", elem).attr("id","headingN"+i);
+       $(".meritBadgeButton", elem).attr("data-target","#collapseN"+i);
+       $(".meritBadgeButton", elem).attr("aria-controls","collapseN"+i);
+       $(".meritBadgeButton",elem).text(badge);
+       
+       var schedules = staffSchedules.filter(function(s){
+         var email = s.guestList[0].email;
+         var netid = email.split("@")[0];
+         var staff = findUser(netid);
+         console.log(staff);
+         if(staff[badge] && staff[badge].toLowerCase() == "yes"){
+           return true;
+         }
+         return false;       
+       });
+       
+       var content = "";
+       console.log(badge);
+       console.log(schedules);
+       $.each(schedules, function(index, event){
+         var email = event.guestList[0].email;
+         var netid = email.split("@")[0];
+         var staff = findUser(netid);
+       
+         content += staff.name;
+         
+         var shiftStart = moment(event.startTime);
+         var shiftEnd = moment(event.endTime);         
+         var time = shiftStart.format("ddd MMM Do h:mm") + " - "  + shiftEnd.format("h:mm a");
+
+         content += ": " + time;
+         content += "<br>";
+         
+       });
+       $(".meritBadgeSchedules", elem).html(content);
+       
+       $(elem).appendTo(".findAMakerAccordion");
+
+       
+     });
+     
+     $('.collapse').collapse();
+     
+  }
+  
+  getStaffSchedules();
+
+});
+
+
+</script>
+
