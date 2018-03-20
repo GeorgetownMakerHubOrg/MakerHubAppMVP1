@@ -3,7 +3,8 @@ function getModules() {
     "featurerequest",
     "meritbadges",
     "safetyorientation",
-    "userregistration"
+    "userregistration",
+    "findamaker"
     ];
   
   return modules;

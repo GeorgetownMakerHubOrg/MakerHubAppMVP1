@@ -72,3 +72,8 @@ function updateUserData(netid, userData){
   return result;
 }
 
+function getStaffScheduleEvents(startTime, endTime){
+  var cal = getStaffScheduleCal();
+  return getCalEvents(cal, startTime, endTime);  
+}
+
