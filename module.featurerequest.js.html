@@ -1,4 +1,8 @@
 <script>
+
+
+$(function() {
+
   function showFeatureRequestScreen(){
     $(".appSection").hide();
     $(".featuresubmitresult").text("");
@@ -12,7 +16,16 @@
       $(".featuresubmitresult").text("Submitting...");
       var title = $("#featureRequestTitle").val();
       var description = $("#featureRequestDescription").val();
+      
       google.script.run
+      .withFailureHandler(function(e){
+        console.log("ERROR in get netid ");
+        console.log(e)
+      })
+      .withSuccessHandler(function(data){
+        var netid = data;    
+      
+        google.script.run
         .withFailureHandler(function(error){console.log(error);})
         .withSuccessHandler(function(data){
           console.log("submitted");
@@ -20,15 +33,14 @@
           $("#featureRequestTitle").val("");
           $("#featureRequestDescription").val("");
           console.log(data);
-      }).postTrelloFeatureRequest(title, description);      
-      
-    });
-  
+        }).postTrelloFeatureRequest(title, description, netid);
+      })
+      .getCurrentSessionNetId();
+    });  
   }
 
-$(function() {
-    $(".showFeatureRequest").click(function(){showFeatureRequestScreen(); return false;});
 
+  $(".showFeatureRequest").click(function(){showFeatureRequestScreen(); return false;});
 });
 </script>
 
