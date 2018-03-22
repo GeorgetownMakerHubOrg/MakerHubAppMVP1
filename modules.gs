@@ -4,7 +4,8 @@ function getModules() {
     "meritbadges",
     "safetyorientation",
     "userregistration",
-    "findamaker"
+    "findamaker",
+    "logappuse"
     ];
   
   return modules;
