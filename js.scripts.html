@@ -350,10 +350,10 @@ $(function()
 	/**/
 	/* mobile-nav */
 	/**/
-	$('#mobile-nav').on('click', '.switcher', function()
+	$('#mobile-nav, #mobile-nav-user').on('click', '.switcher', function()
 	{
     
-    console.log("clicked");
+        console.log("clicked");
 		elem = $(this);
 		elem.toggleClass('opened');
 		
@@ -363,12 +363,12 @@ $(function()
 		}
 		else
 		{
-			$('#mobile-nav ul').removeClass('opened').removeClass('closed');
+			$('#mobile-nav ul, #mobile-nav-user ul').removeClass('opened').removeClass('closed');
 		}
 		return false;
 	});
     
-	$('#mobile-nav').on('click', '.opener', function()
+	$('#mobile-nav, #mobile-nav-user').on('click', '.opener', function()
 	{
 		elem = $(this);
 		elem.closest('ul').addClass('closed');
@@ -382,7 +382,7 @@ $(function()
         return false;
     });
     
-	$('#mobile-nav').on('click', '.back', function()
+	$('#mobile-nav, #mobile-nav-user').on('click', '.back', function()
 	{
 		elem = $(this);
 		elem.closest('ul').removeClass('opened');
