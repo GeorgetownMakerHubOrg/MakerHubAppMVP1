@@ -102,8 +102,7 @@
 							<ul id="mobile-nav-1">
 <!--								<li><a href="#" class="dontopenurl active menuitem">Home</a></li>-->
 <!--								<li><a href="#mobile-nav-2" class="opener"><i class="fa fa-angle-right"></i>Menu With Sub Menus</a></li> -->
-								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup menuitem">Visitor Lookup</a></li>							
-								<li class="visitorEditPriv"><a href="#" class="resetVisitor menuitem ifVisitorPresent">Reset Visitor</a></li>							
+								<li class="visitorEditPriv"><a href="#" class="showVisitorLookup menuitem">Visitor Lookup</a></li>		s</li>							
 <?!= includeModules("menu"); ?>
 
                                 
@@ -127,11 +126,32 @@
 							<div class="grid-row composer">
 								<br />
 								<div class="columns-row">
-									<div class="columns-col columns-col-12 wow fadeInLeft">
+									<div class="columns-col columns-col-10 wow fadeInLeft">
 										<h2>Visitor: <span class="userName"></span></h2>
+                                    </div>
+                                    <div class="columns-col columns-col-2  fadeInLeft">
+                                    
+						<!-- mobile nav -->
+						<nav id="mobile-nav-user" class="mobile-nav mobile-nav-user ifVisitorPresent">
+							<a href="#mobile-nav-user-1" class="switcher"><i class="fa fa-align-justify"></i></a>
+							<ul id="mobile-nav-user-1">
+<!--								<li><a href="#" class="dontopenurl active menuitem">Home</a></li>-->
+<!--								<li><a href="#mobile-nav-2" class="opener"><i class="fa fa-angle-right"></i>Menu With Sub Menus</a></li> -->
+								<li class="visitorEditPriv"><a href="#" class="resetVisitor menuitem ifVisitorPresent">Reset Visitor</a></li>							
+<?!= includeModules("usermenu"); ?>
+							</ul>
+						</nav>
+						<!--/ main nav -->
+
+
                                     </div>
 								</div>
 							</div>
+
+						
+  
+                        
+                        
 						</section>	
  
 		                <section class="appSection page-content-alt visitorEditPriv userLookup">
