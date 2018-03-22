@@ -13,13 +13,11 @@ $(function() {
 
   }
 
-
   $(".checkboxitem").click(function(){
     var checkbox = $(".checkbox", this);
     console.log($(checkbox).prop("checked"));
     $(".checkyesno", this).text($(checkbox).prop("checked") ? "Yes" : "No");
   });
-
 
   $("#userRegistrationSubmit").click(function(){
     console.log("submit");
@@ -48,26 +46,49 @@ $(function() {
     });
     
     var found = findUser(user.netid);
+    var update = false;
     if(found){
-      errors.push("User with netid " + user.netid + " already in system");
+//      errors.push("User with netid " + user.netid + " already in system");
+       // merge existing user with new data
+       update = true;
+       var keys = Object.keys(user);
+       $.each(keys, function(index, key){         
+         found[key] = user[key];
+       });
+       user = found;
+       
     }
     if(errors.length > 0){
       registrationError(errors.join("<BR>"));  
       return false;
     }
 
-    // insert user into table
-    google.script.run.withSuccessHandler(function(response){
-      console.log(response);
-      $(this).off("keydown");
-      registrationComplete(user);
-    })
-    .withFailureHandler(function(message){
-      console.log(message);
-      registrationError(message);
-    })
-    .insertUserData(user);
-    
+
+    if(!update){
+      // insert user into table
+      google.script.run.withSuccessHandler(function(response){
+        console.log(response);
+        $(this).off("keydown");
+        registrationComplete(user);
+      })
+      .withFailureHandler(function(message){
+        console.log(message);
+        registrationError(message);
+      })
+      .insertUserData(user);
+    }else{
+      // insert user into table
+      google.script.run.withSuccessHandler(function(response){
+        console.log(response);
+        $(this).off("keydown");
+        registrationComplete(user);
+      })
+      .withFailureHandler(function(message){
+        console.log(message);
+        registrationError(message);
+      })
+      .updateUserData(user.netid, user);    
+    }
     return false;
     
   });
