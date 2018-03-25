@@ -5,10 +5,10 @@ $(function() {
 
   function showFeatureRequestScreen(){
     $(".appSection").hide();
+    $(".featureRequest").show();
     $(".featuresubmitresult").text("");
     $("#featureRequestTitle").val("");
     $("#featureRequestDescription").val("");
-    $(".featureRequest").show();
     $("#featureRequestSubmit").off("click");
     
     $("#featureRequestSubmit").click(function(){
@@ -18,24 +18,14 @@ $(function() {
       var description = $("#featureRequestDescription").val();
       
       google.script.run
-      .withFailureHandler(function(e){
-        console.log("ERROR in get netid ");
-        console.log(e)
-      })
+      .withFailureHandler(function(error){console.log(error);})
       .withSuccessHandler(function(data){
-        var netid = data;    
-      
-        google.script.run
-        .withFailureHandler(function(error){console.log(error);})
-        .withSuccessHandler(function(data){
-          console.log("submitted");
-          $(".featuresubmitresult").text("Thanks!");
-          $("#featureRequestTitle").val("");
-          $("#featureRequestDescription").val("");
-          console.log(data);
-        }).postTrelloFeatureRequest(title, description, netid);
-      })
-      .getCurrentSessionNetId();
+        console.log("submitted");
+        $(".featuresubmitresult").text("Thanks!");
+        $("#featureRequestTitle").val("");
+        $("#featureRequestDescription").val("");
+        console.log(data);
+      }).postTrelloFeatureRequest(title, description, GLOBALS.user.sessionUser.netid);
     });  
   }
 
