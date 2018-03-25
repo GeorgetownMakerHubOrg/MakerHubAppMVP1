@@ -45,7 +45,7 @@ $(function() {
       user[colname] = val;
     });
     
-    var found = findUser(user.netid);
+    var found = GLOBALS.user.findUser(user.netid);
     var update = false;
     if(found){
 //      errors.push("User with netid " + user.netid + " already in system");
@@ -95,10 +95,10 @@ $(function() {
 
   function registrationComplete(user){
     // reload all users
-    getAllUserData(function(){ 
+    GLOBALS.user.getAllUserData(function(){ 
       $(".registrationMessage").text("Registration Complete!");
-      getSessionUser(updateAppForSessionUser);
-      getThisUserData(user.netid);
+      GLOBALS.user.getSessionUser(GLOBALS.user.updateAppForSessionUser);
+      GLOBALS.user.getThisUserData(user.netid);
     });    
   }
   

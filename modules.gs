@@ -1,5 +1,6 @@
 function getModules() {
   var modules = [
+    "globals",
     "featurerequest",
     "meritbadges",
     "safetyorientation",

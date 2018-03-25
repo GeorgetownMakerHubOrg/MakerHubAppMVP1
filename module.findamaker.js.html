@@ -33,13 +33,13 @@ $(function() {
   function showFindAMakerScreen(){
      $(".appSection").hide();
      $(".findAMaker").show();
-     console.log(meritBadges);
+     console.log(GLOBALS.meritBadges.meritBadges);
      
      var sourceelem = $(".findAMakerTemplate").clone(true);
      $(sourceelem).removeClass("findAMakerTemplate");
      $(".findAMakerTemplate").hide();
      var i = 0;
-     $.each(meritBadges, function(elem, badge){
+     $.each(GLOBALS.meritBadges.meritBadges, function(elem, badge){
        i++;
        var elem = $(sourceelem).clone(true);
        $("#collapseN", elem).attr("aria-labelledby","headingN"+i);
@@ -52,7 +52,7 @@ $(function() {
        var schedules = staffSchedules.filter(function(s){
          var email = s.guestList[0].email;
          var netid = email.split("@")[0];
-         var staff = findUser(netid);
+         var staff = GLOBALS.user.findUser(netid);
          console.log(staff);
          if(staff[badge] && staff[badge].toLowerCase() == "yes"){
            return true;
@@ -66,7 +66,7 @@ $(function() {
        $.each(schedules, function(index, event){
          var email = event.guestList[0].email;
          var netid = email.split("@")[0];
-         var staff = findUser(netid);
+         var staff = GLOBALS.user.findUser(netid);
        
          content += staff.name;
          

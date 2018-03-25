@@ -9,24 +9,16 @@ $(function() {
   var timestamp = now.format("YYYY/MM/DD hh:mm");
   
   // log app use:
+  var netid = GLOBALS.user.sessionUser.netid;
   google.script.run
   .withFailureHandler(function(e){
-    console.log("ERROR in get netid ");
+    console.log("ERROR in logappuse ");
     console.log(e)
   })
   .withSuccessHandler(function(data){
-    var netid = data;
-    google.script.run
-    .withFailureHandler(function(e){
-      console.log("ERROR in logappuse ");
-      console.log(e)
-    })
-    .withSuccessHandler(function(data){
-      console.log("app use logged");
-    })
-    .logAppUse(timestamp, netid, "login", "");  
+    console.log("app use logged");
   })
-  .getCurrentSessionNetId();
+  .logAppUse(timestamp, netid, "login", "");  
 
 });
 

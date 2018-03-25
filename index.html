@@ -212,8 +212,12 @@
   var sessionUser = false;
   
   
-  function getSessionUser(callback){
-    sessionUser = false;
+  function getSessionUser(callback, force){
+    if(GLOBALS.user.sessionUser && !force){
+      callback(GLOBALS.user.sessionUser);
+      return GLOBALS.user.sessionUser;
+    }
+    GLOBALS.user.sessionUser = false;
     $(".sessionUserNetID").text("");
     google.script.run
       .withFailureHandler(function(error){console.log(error);})
@@ -221,39 +225,39 @@
         console.log("session User");
         console.log(netid);
         if(netid.trim() != ""){
-          var searched_array = allUserData.userData.data.filter(function(a){
+          var searched_array = GLOBALS.user.allUserData.userData.data.filter(function(a){
             if(netid.toLowerCase() == a.netid.toLowerCase()){
               return true;
             } else {
               return false;
             }
           });
-          sessionUser = searched_array[0];
-          if(sessionUser.role.toLowerCase() == "manager" ||
-            sessionUser.role.toLowerCase() == "staff" ||
-            sessionUser.role.toLowerCase() == "trusted faculty" ||
-            sessionUser.role.toLowerCase() == "authorized faculty" ||
-            sessionUser.role.toLowerCase() == "volunteer"){
-            sessionUser.visitorEditPriv = true;
+          GLOBALS.user.sessionUser = searched_array[0];
+          if(GLOBALS.user.sessionUser.role.toLowerCase() == "manager" ||
+            GLOBALS.user.sessionUser.role.toLowerCase() == "staff" ||
+            GLOBALS.user.sessionUser.role.toLowerCase() == "trusted faculty" ||
+            GLOBALS.user.sessionUser.role.toLowerCase() == "authorized faculty" ||
+            GLOBALS.user.sessionUser.role.toLowerCase() == "volunteer"){
+            GLOBALS.user.sessionUser.visitorEditPriv = true;
           }else{
-            sessionUser.visitorEditPriv = false;
+            GLOBALS.user.sessionUser.visitorEditPriv = false;
           }
           
         }else{
-          sessionUser = false; 
+          GLOBALS.user.sessionUser = false; 
         }
-        console.log(sessionUser);
-        if(callback){callback();}
+        console.log(GLOBALS.user.sessionUser);
+        if(callback){callback(GLOBALS.user.sessionUser);}
     }).getCurrentSessionNetId();  
   }
   
   function updateAppForSessionUser(){
-    if(sessionUser.netid){
-      $(".sessionUserNetID").text(sessionUser.netid);
+    if(GLOBALS.user.sessionUser.netid){
+      $(".sessionUserNetID").text(GLOBALS.user.sessionUser.netid);
     }else{
        $(".sessionUserNetID").text("anonymouse");
     }
-    if(sessionUser.visitorEditPriv){
+    if(GLOBALS.user.sessionUser.visitorEditPriv){
       $(".visitorEditPriv").show();
     }else{
       $(".visitorEditPriv").hide();
@@ -265,7 +269,7 @@
     google.script.run
       .withFailureHandler(function(error){console.log(error);})
       .withSuccessHandler(function(data){
-        meritBadges = data;
+        GLOBALS.meritBadges.meritBadges = data;
         console.log(meritBadges);
         if(callback){callback();}
     }).getMeritBadges(); 
@@ -275,15 +279,15 @@
     google.script.run
       .withFailureHandler(function(error){console.log(error);})
       .withSuccessHandler(function(data){
-        allUserData = data;
-        console.log(allUserData);
+        GLOBALS.user.allUserData = data;
+        console.log(GLOBALS.user.allUserData);
         if(callback){callback();}
     }).getUserData(); 
   }  
   
   function getThisUserData(netid){
     console.log(netid);
-    var searched_array = allUserData.userData.data.filter(function(a){
+    var searched_array = GLOBALS.user.allUserData.userData.data.filter(function(a){
       if(netid.toLowerCase() == a.netid.toLowerCase()){
         return true;
       } else {
@@ -291,9 +295,9 @@
       }
     });
     if(searched_array.length > 0){
-      thisUserData = searched_array[0];
-      console.log(thisUserData);  
-      $(".userName").text(thisUserData.name);
+      GLOBALS.user.thisUserData = searched_array[0];
+      console.log(GLOBALS.user.thisUserData);  
+      $(".userName").text(GLOBALS.user.thisUserData.name);
       $(".ifVisitorPresent").show();
     }else{
       // show "not found" 
@@ -303,7 +307,7 @@
   
   
   function findUser(netid){
-    var searched_array = allUserData.userData.data.filter(function(a){
+    var searched_array = GLOBALS.user.allUserData.userData.data.filter(function(a){
       if(netid.toLowerCase() == a.netid.toLowerCase()){
         return true;
       } else {
@@ -346,7 +350,7 @@
   function resetVisitor(){
     $(".userName").text("");
     $("#netidinput").val("")
-    thisUserData = false;
+    GLOBALS.user.thisUserData = false;
     initDisplay();
   }
   
@@ -368,13 +372,32 @@
   
   
   function placeImages(){
-    placeImageAt("MakerHubLogoBlue.png", ".logoimage");
+    GLOBALS.images.placeImageAt("MakerHubLogoBlue.png", ".logoimage");
   }
   
   $(function() {
 
+    console.log("index.html js");
+
+    GLOBALS.user = GLOBALS.user ? GLOBALS.user : {};
+    GLOBALS.user.findUser = findUser;
+    GLOBALS.user.getSessionUser = getSessionUser;
+    GLOBALS.user.getThisUserData = getThisUserData;
+    GLOBALS.user.getAllUserData = getAllUserData;
+    GLOBALS.user.updateAppForSessionUser = updateAppForSessionUser;
+    GLOBALS.user.allUserData = allUserData;
+    GLOBALS.user.thisUserDAta = thisUserData;
+    GLOBALS.user.sessionUser = sessionUser;
+
+    GLOBALS.images = GLOBALS.images ? GLOBALS.images : {};
+    GLOBALS.images.placeImageAt = placeImageAt;
+
+    GLOBALS.meritBadges = GLOBALS.meritBadges ? GLOBALS.meritBadges : {};
+    GLOBALS.meritBadges.meritBadges = meritBadges;
+
+
     initDisplay();
-    getAllUserData(function(){ getSessionUser(updateAppForSessionUser);});    
+    GLOBALS.user.getAllUserData(function(){ GLOBALS.user.getSessionUser(GLOBALS.user.updateAppForSessionUser);});    
     getMeritBadges();
     
     placeImages();
@@ -383,7 +406,7 @@
       console.log("searching");
       var netid = $("#netidinput").val();
       try{
-        getThisUserData(netid);
+        GLOBALS.user.getThisUserData(netid);
       }catch(e){}
       return false;     
     });
