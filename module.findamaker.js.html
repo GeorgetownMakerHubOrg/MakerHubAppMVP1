@@ -29,64 +29,69 @@ $(function() {
     .getStaffScheduleEvents(startTime.toString(), endTime.toString());
   }
 
-
+  var loaded = false;
   function showFindAMakerScreen(){
-     $(".appSection").hide();
-     $(".findAMaker").show();
-     console.log(GLOBALS.meritBadges.meritBadges);
+  
+    if (loaded){
+      $('.findamaker_collapse').collapse('hide');
+    }
+    $(".appSection").hide();
+    $(".findAMaker").show();
+    if (loaded){
+      return;
+    }
+    loaded = true;  
+  
+    console.log(GLOBALS.meritBadges.meritBadges);
      
-     var sourceelem = $(".findAMakerTemplate").clone(true);
-     $(sourceelem).removeClass("findAMakerTemplate");
-     $(".findAMakerTemplate").hide();
-     var i = 0;
-     $.each(GLOBALS.meritBadges.meritBadges, function(elem, badge){
-       i++;
-       var elem = $(sourceelem).clone(true);
-       $("#collapseN", elem).attr("aria-labelledby","headingN"+i);
-       $("#collapseN", elem).attr("id","collapseN"+i);
-       $("#headingN", elem).attr("id","headingN"+i);
-       $(".meritBadgeButton", elem).attr("data-target","#collapseN"+i);
-       $(".meritBadgeButton", elem).attr("aria-controls","collapseN"+i);
-       $(".meritBadgeButton",elem).text(badge);
+    var sourceelem = $(".findAMakerTemplate").clone(true);
+    $(sourceelem).removeClass("findAMakerTemplate");
+    $(".findAMakerTemplate").hide();
+    var i = 0;
+    $.each(GLOBALS.meritBadges.meritBadges, function(elem, badge){
+      i++;
+      var elem = $(sourceelem).clone(true);
+      $("#findamaker_collapseN", elem).attr("aria-labelledby","findamaker_headingN"+i);
+      $("#findamaker_collapseN", elem).attr("id","findamaker_collapseN"+i);
+      $("#findamaker_headingN", elem).attr("id","findamaker_headingN"+i);
+      $(".meritBadgeButton", elem).attr("data-target","#findamaker_collapseN"+i);
+      $(".meritBadgeButton", elem).attr("aria-controls","findamaker_collapseN"+i);
+      $(".meritBadgeButton",elem).text(badge);
+      
+      var schedules = staffSchedules.filter(function(s){
+        var email = s.guestList[0].email;
+        var netid = email.split("@")[0];
+        var staff = GLOBALS.user.findUser(netid);
+        console.log(staff);
+        if(staff[badge] && staff[badge].toLowerCase() == "yes"){
+          return true;
+        }
+        return false;       
+      });
        
-       var schedules = staffSchedules.filter(function(s){
-         var email = s.guestList[0].email;
-         var netid = email.split("@")[0];
-         var staff = GLOBALS.user.findUser(netid);
-         console.log(staff);
-         if(staff[badge] && staff[badge].toLowerCase() == "yes"){
-           return true;
-         }
-         return false;       
-       });
+      var content = "";
+      console.log(badge);
+      console.log(schedules);
+      $.each(schedules, function(index, event){
+        var email = event.guestList[0].email;
+        var netid = email.split("@")[0];
+        var staff = GLOBALS.user.findUser(netid);
        
-       var content = "";
-       console.log(badge);
-       console.log(schedules);
-       $.each(schedules, function(index, event){
-         var email = event.guestList[0].email;
-         var netid = email.split("@")[0];
-         var staff = GLOBALS.user.findUser(netid);
-       
-         content += staff.name;
+        content += staff.name;
          
-         var shiftStart = moment(event.startTime);
-         var shiftEnd = moment(event.endTime);         
-         var time = shiftStart.format("ddd MMM Do h:mm") + " - "  + shiftEnd.format("h:mm a");
+        var shiftStart = moment(event.startTime);
+        var shiftEnd = moment(event.endTime);         
+        var time = shiftStart.format("ddd MMM Do h:mm") + " - "  + shiftEnd.format("h:mm a");
 
-         content += ": " + time;
-         content += "<br>";
-         
-       });
-       $(".meritBadgeSchedules", elem).html(content);
+        content += ": " + time;
+        content += "<br>";
+        
+      });
+      $(".meritBadgeSchedules", elem).html(content);
        
-       $(elem).appendTo(".findAMakerAccordion");
-
-       
-     });
-     
-     $('.collapse').collapse();
-     
+      $(elem).appendTo(".findAMakerAccordion");
+    });
+    $('.findamaker_collapse').collapse();  
   }
   
   getStaffSchedules();
