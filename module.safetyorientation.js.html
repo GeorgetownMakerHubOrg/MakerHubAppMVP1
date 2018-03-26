@@ -53,189 +53,85 @@ $(function() {
     $(".safetyorientationTemplate").hide();
     var i = 0;      
     $.each(safetyOrientationSections, function(index, sectionname){
-       i++;
-       var elem = $(sourceelem).clone(true);
-       $("#safetyorientation_collapseN", elem).attr("aria-labelledby","safetyorientation_headingN"+i);
-       $("#safetyorientation_collapseN", elem).attr("id","safetyorientation_collapseN"+i);
-       $("#safetyorientation_headingN", elem).attr("id","safetyorientation_headingN"+i);
-       $(".equipmentButton", elem).attr("data-target","#safetyorientation_collapseN"+i);
-       $(".equipmentButton", elem).attr("aria-controls","safetyorientation_collapseN"+i);
-       $(".equipmentButton",elem).text(sectionname);
+      i++;
+      var elem = $(sourceelem).clone(true);
+      $("#safetyorientation_collapseN", elem).attr("aria-labelledby","safetyorientation_headingN"+i);
+      $("#safetyorientation_collapseN", elem).attr("id","safetyorientation_collapseN"+i);
+      $("#safetyorientation_headingN", elem).attr("id","safetyorientation_headingN"+i);
+      $(".equipmentButton", elem).attr("data-target","#safetyorientation_collapseN"+i);
+      $(".equipmentButton", elem).attr("aria-controls","safetyorientation_collapseN"+i);
+      $(".equipmentButton",elem).text(sectionname);
 
  
-    var sectionrows = safetyOrientationData.filter(function(a){
-      return ( a.section == sectionname && (typeof a.number == "number" || !a.number.match(/[^0-9]/)));
-    });
-    sectionrows.sort(function(a,b){
-      return parseInt(a.number.toString()) -  parseInt(b.number.toString());
-    });
-    $.each(sectionrows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionList", elem).append("<li class='safetyrule'><i class='fa fa-bullhorn'></i> "+row.text+footnotetext+"</li>");
-    });
-    
-    
-    var headerrows =  safetyOrientationData.filter(function(a){
-      return a.section == sectionname && typeof a.number == "string" && a.number.trim() == "header";
-    });
-    console.log("header");
-    console.log(headerrows);
-    $.each(headerrows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionHeader", elem).append("<li class='safetyheader'>"+row.text+footnotetext+"</li>");
-    }); 
-    
-    var risksrows =  safetyOrientationData.filter(function(a){
-      return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "risks";
-    });  
-    $.each(risksrows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionRisks", elem).append("<li class='safetyrisks'><B>Risks Include:</b> "+row.text+footnotetext+"</li>");
-    });    
-    
-    var footerrows =  safetyOrientationData.filter(function(a){
-      return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "footer";
-    });
-    $.each(footerrows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionFooter", elem).append("<li class='safetyfooter'> "+row.text+footnotetext+"</li>");
-    });
-    
-    var footerlargerows =  safetyOrientationData.filter(function(a){
-      return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "footerlarge";
-    });
-    $.each(footerlargerows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionFooterLarge", elem).append("<li class='safetyfooter'> "+row.text+footnotetext+"</li>");
-    });
- 
-
-
-       $(elem).appendTo(".safetyorientationAccordion");
-     });
-     $('.safetyorientation_collapse').collapse(); 
-  
-  }
-  
-  
-  
- 
-  function showSafetyOrientationScreen2(){
-    $(".appSection").hide();
-    $(".safetyOrientation").show();
-    $("#safety-mobile-nav-1").empty();
-    $(".safetyOrientationSectionTitle").empty();
-    $(".safetyOrientationSectionHeader").empty();
-    $(".safetyOrientationSectionRisks").empty();
-    $(".safetyOrientationSectionList").empty();
-    $(".safetyOrientationSectionFooter").empty();
-    
-      
-    $.each(safetyOrientationSections, function(index, sectionname){
-      var sectionli = $("<li data-sectionname='"+sectionname+"' ><a href='#' class='menuitem'>"+sectionname+"</a></li>").appendTo("#safety-mobile-nav-1");
-      $(sectionli).click(function(){
-        try{
-          var clickedname = $(this).data("sectionname");
-          $(".switcher",$(this).closest("nav")).trigger("click");        
-          console.log("clicked " + clickedname);
-          showSection(clickedname);
-        }catch(e){
-          console.log(e);
-        }
-        return false;
+      var sectionrows = safetyOrientationData.filter(function(a){
+        return ( a.section == sectionname && (typeof a.number == "number" || !a.number.match(/[^0-9]/)));
       });
+      sectionrows.sort(function(a,b){
+        return parseInt(a.number.toString()) -  parseInt(b.number.toString());
+      });
+      $.each(sectionrows, function(index, row){
+        var footnotetext = "";
+        if(row.footnote){
+          footnotetext = "<br><i>"+row.footnote+"</i>";
+        }
+        $(".safetyOrientationSectionList", elem).append("<li class='safetyrule'><i class='fa fa-bullhorn'></i> "+row.text+footnotetext+"</li>");
+      });
+    
+    
+      var headerrows =  safetyOrientationData.filter(function(a){
+        return a.section == sectionname && typeof a.number == "string" && a.number.trim() == "header";
+      });
+      $.each(headerrows, function(index, row){
+        var footnotetext = "";
+        if(row.footnote){
+          footnotetext = "<br><i>"+row.footnote+"</i>";
+        }
+        $(".safetyOrientationSectionHeader", elem).append("<li class='safetyheader'>"+row.text+footnotetext+"</li>");
+      }); 
+    
+      var risksrows =  safetyOrientationData.filter(function(a){
+        return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "risks";
+      });  
+      $.each(risksrows, function(index, row){
+        var footnotetext = "";
+        if(row.footnote){
+          footnotetext = "<br><i>"+row.footnote+"</i>";
+        }
+        $(".safetyOrientationSectionRisks", elem).append("<li class='safetyrisks'><B>Risks Include:</b> "+row.text+footnotetext+"</li>");
+      });    
+    
+      var footerrows =  safetyOrientationData.filter(function(a){
+        return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "footer";
+      });
+      $.each(footerrows, function(index, row){
+        var footnotetext = "";
+        if(row.footnote){
+          footnotetext = "<br><i>"+row.footnote+"</i>";
+        }
+        $(".safetyOrientationSectionFooter", elem).append("<li class='safetyfooter'> "+row.text+footnotetext+"</li>");
+      });
+    
+      var footerlargerows =  safetyOrientationData.filter(function(a){
+        return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "footerlarge";
+      });
+      $.each(footerlargerows, function(index, row){
+        var footnotetext = "";
+        if(row.footnote){
+          footnotetext = "<br><i>"+row.footnote+"</i>";
+        }
+        $(".safetyOrientationSectionFooterLarge", elem).append("<li class='safetyfooter'> "+row.text+footnotetext+"</li>");
+      });
+ 
+
+
+      $(elem).appendTo(".safetyorientationAccordion");
     });
+    $('.safetyorientation_collapse').collapse(); 
+  
   }
   
-  function showSection(sectionname){
   
-
-    $(".safetyOrientationSectionTitle").text(sectionname);
-    $(".safetyOrientationSectionHeader").empty();
-    $(".safetyOrientationSectionRisks").empty();
-    $(".safetyOrientationSectionList").empty();
-    $(".safetyOrientationSectionFooter").empty();
   
-    var sectionrows = safetyOrientationData.filter(function(a){
-      return ( a.section == sectionname && (typeof a.number == "number" || !a.number.match(/[^0-9]/)));
-    });
-    sectionrows.sort(function(a,b){
-      return parseInt(a.number.toString()) -  parseInt(b.number.toString());
-    });
-    $.each(sectionrows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionList").append("<li class='safetyrule'><i class='fa fa-bullhorn'></i> "+row.text+footnotetext+"</li>");
-    });
-    
-    
-    var headerrows =  safetyOrientationData.filter(function(a){
-      return a.section == sectionname && typeof a.number == "string" && a.number.trim() == "header";
-    });
-    console.log("header");
-    console.log(headerrows);
-    $.each(headerrows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionHeader").append("<li class='safetyheader'>"+row.text+footnotetext+"</li>");
-    }); 
-    
-    var risksrows =  safetyOrientationData.filter(function(a){
-      return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "risks";
-    });  
-    $.each(risksrows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionRisks").append("<li class='safetyrisks'><B>Risks Include:</b> "+row.text+footnotetext+"</li>");
-    });    
-    
-    var footerrows =  safetyOrientationData.filter(function(a){
-      return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "footer";
-    });
-    $.each(footerrows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionFooter").append("<li class='safetyfooter'> "+row.text+footnotetext+"</li>");
-    });
-    
-    var footerlargerows =  safetyOrientationData.filter(function(a){
-      return a.section == sectionname &&  typeof a.number == "string" && a.number.trim() == "footerlarge";
-    });
-    $.each(footerlargerows, function(index, row){
-      var footnotetext = "";
-      if(row.footnote){
-        footnotetext = "<br><i>"+row.footnote+"</i>";
-      }
-      $(".safetyOrientationSectionFooterLarge").append("<li class='safetyfooter'> "+row.text+footnotetext+"</li>");
-    });
-    
-
-  }
-
-
   
   $(".showSafetyOrientation").click(function(){
     $(".switcher","#safetyMobileNav").addClass("closed").removeClass("opened");
@@ -243,23 +139,9 @@ $(function() {
     return false;
   });
   
-   $('#safety-mobile-nav').on('click', '.switcher', function()
-   {
-      console.log("clicked");
-      elem = $(this);
-	  elem.toggleClass('opened');		
-	  if( elem.hasClass('opened') )
-	  {
-		$(elem.attr('href')).addClass('opened');
-	  }
-	  else
-      {
-        $('#safety-mobile-nav ul').removeClass('opened').removeClass('closed');
-      }
-	  return false;
-	});
+   
     
-    getSafetyOrientationData();
+  getSafetyOrientationData();
 
 
 });
