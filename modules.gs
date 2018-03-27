@@ -7,7 +7,9 @@ function getModules() {
     "userregistration",
     "findamaker",
     "equipmentreservation",
-    "logappuse"
+    "logappuse",
+    "purchaserequest",
+    
     ];
   
   return modules;
