@@ -1,0 +1,85 @@
+<script>
+$(function() {
+
+  var equipmentList = false;
+  var openHours = false;
+  
+  function getEquipmentList(){
+    if(equipmentList){
+      return;
+    }
+    google.script.run
+    .withFailureHandler(function(message){
+      console.log("ERROR");
+      console.log(message);
+    })
+    .withSuccessHandler(function(data){
+      console.log("got equipmentList");
+      console.log(data);      
+      equipmentList = data;
+    })
+    .getEquipmentList();    
+  }
+  
+  function getOpenHours(){
+    if(openHours){
+      return;
+    }
+    google.script.run
+    .withFailureHandler(function(message){
+      console.log("ERROR");
+      console.log(message);
+    })
+    .withSuccessHandler(function(data){
+      console.log("got openHours");
+      console.log(data);
+      openHours = data;
+    })
+    .getOpenHours();
+  }
+
+  var loaded = false;
+  function showEquipmentReservationScreen(){
+    if (loaded){
+      $('.equipmentreservation_collapse').collapse('hide');
+    }
+    $(".appSection").hide();
+    $(".equipmentReservation").show();
+    if (loaded){
+      return;
+    }
+    loaded = true; 
+    
+    var sourceelem = $(".equipmentreservationTemplate").clone(true);
+    $(sourceelem).removeClass("equipmentreservationTemplate");
+    $(".equipmentreservationTemplate").hide();
+    var i = 0;
+    var eqgroupkeys = Object.keys(equipmentList);
+    $.each(eqgroupkeys, function(index, eqgroupkey){
+      var eqgroup = equipmentList[eqgroupkey];
+      var itemkeys = Object.keys(eqgroup.items);
+      $.each(itemkeys, function(index2, itemkey){
+        i++;
+        var item = eqgroup.items[itemkey];    
+        var elem = $(sourceelem).clone(true);
+        $("#equipmentreservation_collapseN", elem).attr("aria-labelledby","equipmentreservation_headingN"+i);
+        $("#equipmentreservation_collapseN", elem).attr("id","equipmentreservation_collapseN"+i);
+        $("#equipmentreservation_headingN", elem).attr("id","equipmentreservation_headingN"+i);
+        $(".equipmentreservationButton", elem).attr("data-target","#equipmentreservation_collapseN"+i);
+        $(".equipmentreservationButton", elem).attr("aria-controls","equipmentreservation_collapseN"+i);
+        $(".equipmentreservationButton",elem).text(eqgroupkey + " : " + itemkey);
+    
+        $(elem).appendTo(".equipmentreservationAccordion");        
+      });
+    });
+    $('.findamaker_collapse').collapse();  
+  }
+  
+  getEquipmentList();
+  getOpenHours();
+  $(".showEquipmentReservation").click(showEquipmentReservationScreen);
+
+});
+</script>
+
+

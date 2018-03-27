@@ -77,13 +77,13 @@ $(function() {
         var netid = email.split("@")[0];
         var staff = GLOBALS.user.findUser(netid);
        
-        content += staff.name;
+        content += "<span class='findamakername'>"+staff.name+"</span>";
          
         var shiftStart = moment(event.startTime);
         var shiftEnd = moment(event.endTime);         
         var time = shiftStart.format("ddd MMM Do h:mm") + " - "  + shiftEnd.format("h:mm a");
 
-        content += ": " + time;
+        content += ": <span class='findamakersched'>" + time + "</span>";
         content += "<br>";
         
       });

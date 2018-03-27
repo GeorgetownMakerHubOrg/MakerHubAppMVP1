@@ -23,7 +23,6 @@ function getMeritBadges(){
   return MeritBadges; 
 }
 
-
 /*
 ================================ DOGET =====================================
 This functions gets called when the pages loads every time.
