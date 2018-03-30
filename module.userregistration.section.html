@@ -9,11 +9,11 @@
         </div>
       </header>
       <div class="columns-col columns-col-9 wow fadeInLeft userRegistrationContent">
-        <div class="inputitem"><input class="inputtext longerinput formelem place1" data-required="true" data-place="1" data-colname="name" type="text" name="name" id="username" size="30" placeholder="Name"/></div>
-        <div class="inputitem"><input class="inputtext longerinput formelem place1" data-required="true"  data-place="2" data-colname="netid" type="text" name="netid" id="usernetid" size="30" placeholder="NeID (letters and numbers)"/></div>
-        <div class="inputitem"><input class="inputtext longerinput formelem place1"  data-required="true" data-place="3" data-colname="swipemd5" type="text" name="guid" id="userguid" size="30" placeholder="GUID (number on your GO Card)"/></div>
+        <div class="inputitem"><input class="inputfield button-full-width" data-required="true" data-place="1" data-colname="name" type="text" name="name" id="username" size="30" placeholder="Name"/></div>
+        <div class="inputitem"><input class="inputfield button-full-width" data-required="true"  data-place="2" data-colname="netid" type="text" name="netid" id="usernetid" size="30" placeholder="NeID (letters and numbers)"/></div>
+        <div class="inputitem"><input class="inputfield button-full-width"  data-required="true" data-place="3" data-colname="swipemd5" type="text" name="guid" id="userguid" size="30" placeholder="GUID (number on your GO Card)"/></div>
         <div class="inputitem">
-          <select class="custom-select required formelem place2"   data-required="true"  data-place="4" data-colname="role" name="role" id="userrole">
+          <select class="inputfield button-full-width"   data-required="true"  data-place="4" data-colname="role" name="role" id="userrole">
             <option selected value="">Maker Hub Role</option>
             <option value="Visitor">Visitor</option>
             <option value="Staff">Staff</option>
@@ -23,7 +23,7 @@
           </select>
         </div>
         <div class="inputitem">
-          <select class="custom-select required  formelem place3"  data-required="true"  data-colname="status" data-place="5" name="status" id="userstatus">
+          <select class="inputfield button-full-width"  data-required="true"  data-colname="status" data-place="5" name="status" id="userstatus">
             <option selected value="">Academic Status</option>
             <option value="Undergraduate">Undergraduate</option>
             <option value="Graduate">Graduate</option>
@@ -34,25 +34,25 @@
           </select>
         </div>
         <div class="inputitem">
-            <input class="inputtext longerinput  formelem place4"  data-place="6" data-colname="school" type="text" name="school" id="userschool" size=30 placeholder="School/Dept (or N/A)"/>
+            <input class="inputfield button-full-width"  data-place="6" data-colname="school" type="text" name="school" id="userschool" size=30 placeholder="School/Dept (or N/A)"/>
         </div>
         <div class="inputitem">
-            <input class="inputtext longerinput formelem place5"  data-place="7" data-colname="year" type="text" name="year" id="useryear" size=30 placeholder="Year of Graduation (or N/A)"/>
+            <input class="inputfield button-full-width"  data-place="7" data-colname="year" type="text" name="year" id="useryear" size=30 placeholder="Year of Graduation (or N/A)"/>
         </div>
         <div class="inputitem inputmailinglist checkboxitem">
-            <input id="usermailinglist" class="formelem checkbox" type="checkbox" data-colname="mailinglist" name="mailinglist" value="Yes" /> 
+            <input id="usermailinglist" class="inputfield formelem checkbox" type="checkbox" data-colname="mailinglist" name="mailinglist" value="Yes" /> 
             <label class="niceoval usermailinglist" for="usermailinglist">Put me on the Mailing List: <span id="mailinglistyesno" class="checkyesno">No</span></label>
         </div>
         <div class="inputitem inputsafetyorientation checkboxitem">
-            <input id="usersafetyorientation"  class="formelem checkbox" type="checkbox" data-colname="Received Safety Orientation" name="safetyorientation" value="Yes" /> 
+            <input id="usersafetyorientation"  class="inputfield formelem checkbox" type="checkbox" data-colname="Received Safety Orientation" name="safetyorientation" value="Yes" /> 
             <label class="niceoval usersafetyorientation" for="usersafetyorientation">Received Safety Orientation: <span id="safetyorientationyesno" class="checkyesno">No</span></label>
         </div>
         <div class="inputitem inputsafetywaiver checkboxitem">
-            <input id="usersafetywaiver"  class="formelem checkbox"  type="checkbox" data-colname="Signed Safety Waiver" name="safetywaiver" value="Yes" /> 
+            <input id="usersafetywaiver"  class="inputfield formelem checkbox"  type="checkbox" data-colname="Signed Safety Waiver" name="safetywaiver" value="Yes" /> 
             <label class="niceoval usersafetywaiver" for="usersafetywaiver">Signed Safety Waiver: <span id="safetywaiveryesno" class="checkyesno">No</span></label>
         </div>
         <div class="inputitem submitnewuser niceoval">
-          <button id="userRegistrationSubmit">Submit</button>
+          <button id="userRegistrationSubmit" class="submitbutton button-with-right-icon">Submit <i class="fa fa-paper-plane"></i></button>
         </div>
         <div class="registrationError"></div>
         <div class="registrationMessage"></div>
