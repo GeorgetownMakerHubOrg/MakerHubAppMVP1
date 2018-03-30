@@ -30,8 +30,14 @@ This functions gets called when the pages loads every time.
 */
 function doGet(e) {
   Logger.log("Opening page...");  
-  var html = HtmlService.createTemplateFromFile('index').evaluate();
+  
+  var html = HtmlService.createTemplateFromFile('index').evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   html.addMetaTag('viewport', 'width=device-width, initial-scale=1');
+  
+  /*
+   var output = HtmlService.createHtmlOutput('<b>Hello, world!</b>');
+   output.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  */
   return html;
 }
 
