@@ -54,7 +54,16 @@ this function let you include ALL the modules for a particular section
 ============================================================================
 */
 
+var cacheModules = true;
 function includeModules(section){
+  if(cacheModules){
+    var cache = CacheService.getScriptCache();
+    var cached = cache.get("includeModules"+section);
+    if (cached != null) {
+      return cached;
+    }
+  }
+  console.time("includeModules"+section);
   var sectionContent = ""; 
   var modules = getModules();
   for (var i = 0 ; i < modules.length; i++){
@@ -69,6 +78,9 @@ function includeModules(section){
       Logger.log(e);
     }
   }
+  console.timeEnd("includeModules"+section);
+  cache.put("includeModules"+section, sectionContent, 1500); // cache for 25 minutes
+
   return sectionContent;
 }
 
