@@ -4,6 +4,9 @@
 $(function() {
 
   function showFeatureRequestScreen(){
+    var submitting = false;
+  
+  
     $(".appSection").hide();
     $(".featureRequest").show();
     $(".featuresubmitresult").text("");
@@ -12,20 +15,37 @@ $(function() {
     $("#featureRequestSubmit").off("click");
     
     $("#featureRequestSubmit").click(function(){
-      console.log("submitting");
+      if(submitting){
+        return false;
+      }
+      submitting = true;
       $(".featuresubmitresult").text("Submitting...");
       var title = $("#featureRequestTitle").val();
       var description = $("#featureRequestDescription").val();
       
+      if(title.trim() == ""){
+        $(".featuresubmitresult").text("No Title Provided");
+        submitting = false;
+        return false;      
+      }
+      
       google.script.run
-      .withFailureHandler(function(error){console.log(error);})
+      .withFailureHandler(function(error){
+        console.log(error);
+        $(".featuresubmitresult").text("ERROR: " + error);        
+        $("#featureRequestTitle").val("");
+        $("#featureRequestDescription").val("");
+        submitting = false;
+      })
       .withSuccessHandler(function(data){
         console.log("submitted");
         $(".featuresubmitresult").text("Thanks!");
         $("#featureRequestTitle").val("");
         $("#featureRequestDescription").val("");
+        submitting = false;
         console.log(data);
       }).postTrelloFeatureRequest(title, description, GLOBALS.user.sessionUser.netid);
+      return false;
     });  
   }
 

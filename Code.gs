@@ -2,6 +2,8 @@
 var userTable = SpreadsheetApp.openById(getUserTableId());
 var safetyTable = SpreadsheetApp.openById(getSafetyTableId());
 
+var cacheModules = true;
+
 var MeritBadges = [
   'Laser Cutter',
   '3D Printing',	
@@ -29,15 +31,15 @@ This functions gets called when the pages loads every time.
 ============================================================================
 */
 function doGet(e) {
+  
+//  var parameter = e.parameter;
+    
   Logger.log("Opening page...");  
-  
-  var html = HtmlService.createTemplateFromFile('index').evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-  html.addMetaTag('viewport', 'width=device-width, initial-scale=1');
-  
-  /*
-   var output = HtmlService.createHtmlOutput('<b>Hello, world!</b>');
-   output.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-  */
+  var html = HtmlService
+      .createTemplateFromFile('index')
+      .evaluate()
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1');
   return html;
 }
 
@@ -58,6 +60,14 @@ this function let you include ALL the modules for a particular section
 */
 
 function includeModules(section){
+  var cache = CacheService.getScriptCache();
+  if(cacheModules){
+    var cached = cache.get("includeModules"+section);
+    if (cached != null) {
+      return cached;
+    }
+  }
+  console.time("includeModules"+section);
   var sectionContent = ""; 
   var modules = getModules();
   for (var i = 0 ; i < modules.length; i++){
@@ -72,6 +82,9 @@ function includeModules(section){
       Logger.log(e);
     }
   }
+  console.timeEnd("includeModules"+section);
+  cache.put("includeModules"+section, sectionContent, 1500); // cache for 25 minutes
+
   return sectionContent;
 }
 

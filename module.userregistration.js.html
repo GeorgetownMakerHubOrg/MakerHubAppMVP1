@@ -19,8 +19,16 @@ $(function() {
     $(".checkyesno", this).text($(checkbox).prop("checked") ? "Yes" : "No");
   });
 
+  var submitting = false;
   $("#userRegistrationSubmit").click(function(){
     console.log("submit");
+    
+    if(submitting){
+      console.log("already submitting");
+      return false;
+    }
+    submitting = true;
+    
     $(".registrationMessage").empty();
     $(".registrationError").empty();
     
@@ -45,24 +53,28 @@ $(function() {
       user[colname] = val;
     });
     
+    if(!user.netid){
+      errors.push("netid required");
+    }
+    
     var found = GLOBALS.user.findUser(user.netid);
     var update = false;
     if(found){
-//      errors.push("User with netid " + user.netid + " already in system");
-       // merge existing user with new data
        update = true;
        var keys = Object.keys(user);
        $.each(keys, function(index, key){         
          found[key] = user[key];
        });
-       user = found;
-       
+       user = found;   
     }
     if(errors.length > 0){
       registrationError(errors.join("<BR>"));  
+      submitting = false;
       return false;
     }
 
+    console.log("update : " + update);
+    console.log(user);
 
     if(!update){
       // insert user into table
@@ -95,6 +107,8 @@ $(function() {
 
   function registrationComplete(user){
     // reload all users
+    submitting = false;        
+    $(".formelem",".userRegistrationContent").val("");
     GLOBALS.user.getAllUserData(function(){ 
       $(".registrationMessage").text("Registration Complete!");
       GLOBALS.user.getSessionUser(GLOBALS.user.updateAppForSessionUser);
@@ -103,8 +117,8 @@ $(function() {
   }
   
   function registrationError(message){
+    submitting = false;        
     $(".registrationError").html("Registration Error: " +message);
-  
   }
 
 
