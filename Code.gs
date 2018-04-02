@@ -2,6 +2,8 @@
 var userTable = SpreadsheetApp.openById(getUserTableId());
 var safetyTable = SpreadsheetApp.openById(getSafetyTableId());
 
+var cacheModules = false;
+
 var MeritBadges = [
   'Laser Cutter',
   '3D Printing',	
@@ -29,6 +31,9 @@ This functions gets called when the pages loads every time.
 ============================================================================
 */
 function doGet(e) {
+  
+//  var parameter = e.parameter;
+    
   Logger.log("Opening page...");  
   var html = HtmlService
       .createTemplateFromFile('index')
@@ -54,10 +59,9 @@ this function let you include ALL the modules for a particular section
 ============================================================================
 */
 
-var cacheModules = true;
 function includeModules(section){
+  var cache = CacheService.getScriptCache();
   if(cacheModules){
-    var cache = CacheService.getScriptCache();
     var cached = cache.get("includeModules"+section);
     if (cached != null) {
       return cached;
