@@ -1,14 +1,4 @@
-var reservationCalName = "Georgetown Maker Hub Equipment Reservations";
-var reservationCal = false;
 
-// get Calendars 
-function getReservationCal(){
-  if(!reservationCal){
-    var calendars = CalendarApp.getCalendarsByName(reservationCalName);
-    reservationCal = calendars[0];
-  }
-  return reservationCal;
-}
 
 
 function getOverlappingEquipmentReservations(equipmentName, startDate, endDate){
