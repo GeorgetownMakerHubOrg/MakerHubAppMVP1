@@ -1,0 +1,54 @@
+<script>
+
+
+$(function() {
+
+  function showBrokenEquipmentScreen(){
+    $(".appSection").hide();
+    $(".brokenEquipment").show();
+    $(".brokensubmitresult").text("");
+    $("#equipmentDescription").val("");
+    $("#brokenReportSubmit").off("click");
+    $(".brokenequipmentsubmitreport").text("");
+   
+   
+    var submitting = false;
+    $("#brokenReportSubmit").click(function(){
+      console.log("submitting");
+      if(submitting){
+        return false;
+      }
+      submitting = true;
+      var title = $("#brokenEquipmentTitle").val();
+      if(title.trim() == ""){
+        submitting = false;
+        return false;
+      }
+      $(".brokenequipmentsubmitreport").text("Submitting broken equipment report...");
+      
+      var description = $("#equipmentDescription").val();
+      
+      google.script.run
+      .withFailureHandler(function(error){
+        console.log(error);
+        submitting = false;
+      })
+      .withSuccessHandler(function(data){
+        console.log("submitted");
+        $(".brokenequipmentsubmitreport").text("Thanks!");
+        $("#brokenEquipmentTitle").val("");
+        $("#equipmentDescription").val("");
+        console.log(data);
+        submitting = false;
+    
+      }).postTrelloBrokenReport( "Broken Equipment Report: "+title,description, GLOBALS.user.sessionUser.netid);
+      return false;
+    }); 
+   
+   
+  }
+  
+  $(".showBrokenEquipment").click(function(){showBrokenEquipmentScreen(); return false;});
+});
+
+</script>

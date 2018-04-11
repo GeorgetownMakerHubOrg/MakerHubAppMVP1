@@ -4,7 +4,7 @@
 function getOverlappingEquipmentReservations(equipmentName, startDate, endDate){
   cal = getReservationCal();
   var filterFunction = function(event){
-    if(event.getDescription.match(equipmentName)){
+    if(event.getDescription().match(equipmentName)){
       return true; 
     }
   }
@@ -64,13 +64,9 @@ function getOverlappingEvents(cal, startDate, endDate, filterFunction){
     cal = getStaffScheduleCal();
     startDate = new Date("January 20, 2018, 16:30 ");
     endDate = new Date("January 20, 2018, 17:00 "); 
-    filterFunction = function(event){
-      if(event.getTitle().match(/sarah/i)){
-        return true; 
-      }
-    }
+    
   }
-  var events = cal.getEvents(startDate, endDate);
+  var events = cal.getEvents(new Date(startDate), new Date(endDate));
   Logger.log(events);
   var newEvents = events;
   if(filterFunction){

@@ -9,7 +9,7 @@ function getModules() {
     "logappuse",
     "purchaserequest",
 //    "equipmentreservation",
-    
+    "brokenequipment",
     ];
   
   return modules;
