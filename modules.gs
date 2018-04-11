@@ -6,9 +6,9 @@ function getModules() {
     "safetyorientation",
     "userregistration",
     "findamaker",
-    "equipmentreservation",
     "logappuse",
     "purchaserequest",
+//    "equipmentreservation",
     
     ];
   

@@ -59,6 +59,9 @@ $(function() {
       $(".meritBadgeButton",elem).text(badge);
       
       var schedules = staffSchedules.filter(function(s){
+        if(!s.guestList[0]){
+          return false;
+        }
         var email = s.guestList[0].email;
         var netid = email.split("@")[0];
         var staff = GLOBALS.user.findUser(netid);
@@ -72,7 +75,7 @@ $(function() {
       var content = "";
       console.log(badge);
       console.log(schedules);
-      $.each(schedules, function(index, event){
+      $.each(schedules, function(index, event){      
         var email = event.guestList[0].email;
         var netid = email.split("@")[0];
         var staff = GLOBALS.user.findUser(netid);
