@@ -11,22 +11,38 @@ $(function() {
     $("#requestDescription").val("");
     $("#purchaseRequestSubmit").off("click");
    
+   
+    var submitting = false;
     $("#purchaseRequestSubmit").click(function(){
       console.log("submitting");
-      $(".purchaserequestsubmitresult").text("Submitting...");
+      if(submitting){
+        return false;
+      }
+      submitting = true;
       var title = $("#purchaseRequestTitle").val();
+      if(title.trim() == ""){
+        submitting = false;
+        return false;
+      }
+      $(".purchaserequestsubmitresult").text("Submitting...");
+      
       var description = $("#requestDescription").val();
       var purchasetype = $("#purchasetype option:selected").val();
       
       google.script.run
-      .withFailureHandler(function(error){console.log(error);})
+      .withFailureHandler(function(error){
+        console.log(error);
+        submitting = false;
+      })
       .withSuccessHandler(function(data){
         console.log("submitted");
         $(".purchaserequestsubmitresult").text("Thanks!");
         $("#purchaseRequestTitle").val("");
         $("#requestDescription").val("");
         console.log(data);
+        submitting = false;
       }).postTrelloPurchaseRequest( purchasetype+": "+title,description, GLOBALS.user.sessionUser.netid);
+      return false;
     }); 
    
   }

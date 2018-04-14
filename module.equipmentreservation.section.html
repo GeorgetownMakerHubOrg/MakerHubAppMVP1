@@ -1,4 +1,12 @@
-		               	<section class="appSection ft-Wrapper visitorEditPriv equipmentReservation" id="equipmentreservation"> <!--YOU NEED TO PUT A FUNCTION TO HIDE "userinformation" SECTION WHEN ITS NOT RUN-->
+<link href="https://cdn.rawgit.com/xdan/datetimepicker/11a13e94/build/jquery.datetimepicker.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://cdn.rawgit.com/xdan/datetimepicker/11a13e94/build/jquery.datetimepicker.full.min.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment-with-locales.min.js"
+    crossorigin="anonymous"></script>
+
+
+<section class="appSection ft-Wrapper visitorEditPriv equipmentReservation" id="equipmentreservation"> <!--YOU NEED TO PUT A FUNCTION TO HIDE "userinformation" SECTION WHEN ITS NOT RUN-->
 							<div class="grid-row composer">
 								<br />
 								<div class="columns-row">
@@ -25,20 +33,28 @@
     </div>
     <div id="equipmentreservation_collapseN" class="equipmentreservation_collapse collapse" aria-labelledby="equipmentreservation_headingN" data-parent="#equipmentreservation_accordion">
       <div class="card-body equipmentreservationContent ">
-        <span class='equipmentreservationHead'>Reserve:</span>
-        <BR/>
+        <div class='equipmentreservationHead'><h3>Reserve:</h3></div>
         <div class="equipmentreservationBody">
-       
+          <div class="eqResDateContainer"><span>
+          <input type="text" class="eqResDate eqResDateStartDate" value="Start Time" placeholder="Start Time"></span>
+          </div>
+          <div class="eqResDateContainer">
+          <input type="text" class="eqResDate eqResDateEndDate" value="End Time" placeholder="End Time">
+          </div>
+          <div class="eqResSubmit"><button class="eqResDateSubmit submit-button  button-with-left-icon button-full-width"><i class="fa fa-paper-plane"></i> Create Reservation</button></div>
+          <div class="eqResErrors"></div>
+          <div class="eqResMessages"></div>
+        </div>
+        <BR/>
+        <div class="equipmentCurrentReservations">
+          <h3>Current Reservations:</h3>
+          <div class="equipmentCurrentReservationsList">        
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>                                            
-                                            
-                                            
-                                            
-                                            
-                                            
                                             
 									</div>	                                
                                 </div>

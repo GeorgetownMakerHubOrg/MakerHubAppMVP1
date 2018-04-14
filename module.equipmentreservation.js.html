@@ -3,6 +3,32 @@ $(function() {
 
   var equipmentList = false;
   var openHours = false;
+  var reservationEvents = false;
+  moment().format();
+  
+  var now = moment();
+  var displayStartTime = moment(now).add(-5, "minutes");
+  var displayEndTime = moment(now).add(14, "days");
+  
+  console.log("getting " + displayStartTime + " -   " + displayEndTime);
+  
+  function getReservationEvents(callback){
+    console.log("getting " + displayStartTime.toString() + " -   " + displayEndTime.toString());
+  
+    google.script.run
+    .withFailureHandler(function(e){
+      console.log("getEquipmentReservationEvents error : " + e);
+    })
+    .withSuccessHandler(function(data){
+      console.log("got reservation events");
+      console.log(data);
+      reservationEvents = data;
+      if(callback){
+        callback();
+      }
+    })
+    .getEquipmentReservationEvents(displayStartTime.toString(), displayEndTime.toString());
+  }
   
   function getEquipmentList(){
     if(equipmentList){
@@ -37,6 +63,63 @@ $(function() {
     })
     .getOpenHours();
   }
+  
+  
+  function showCurrentReservations(itemname, containerElem){
+    $(containerElem).empty();  
+    var currentReservations = reservationEvents.filter(function(r){
+      if(r.title.trim() == itemname.trim()){
+        return true;
+      }
+      return false;
+    });
+    $.each(currentReservations, function(index, reservation){
+      var resStart = moment(reservation.startTime);
+      var resEnd = moment(reservation.endTime);         
+      var time = resStart.format("ddd MMM Do h:mm a") + " - "  + resEnd.format("ddd MMM Do h:mm a");        
+      var html = "<span class='reservation'>"+ time + "("+reservation.guestList[0].email+") </span><br/>";
+      $(containerElem).append(html);
+    });  
+  }
+  
+  
+  function getOverlappingEquipmentReservations(itemname, startTime, endTime, successCallback, isOverlapsCallback){
+    google.script.run
+    .withFailureHandler(function(e){
+      console.log("getOverlappingEquipmentReservations error " + e);
+    })
+    .withSuccessHandler(function(data){
+      console.log("getOverlappingEquipmentReservations");
+      console.log(data);
+      if(data.length > 0){
+        isOverlapsCallback("This reservation overlaps with an existing reservation");
+      }else{
+        successCallback();
+      }
+    })
+    .getOverlappingEquipmentReservations(itemname, startTime.toString(), endTime.toString());
+  }
+  
+  function saveReservation(itemname, reserver, startTime, endTime, successCallback, failureCallback){
+    var title = itemname;
+    var description = itemname;
+    var guests = [reserver];
+    google.script.run
+    .withFailureHandler(function(e){
+      console.log("saveReservation Error " + e);
+      if(failureCallback){
+        failureCallback(e);
+      }else{
+        successCallback();
+      }
+    })
+    .withSuccessHandler(function(data){
+      console.log("reservation Made");
+      console.log(data);
+      successCallback();
+    })
+    .createReservationEvent(startTime, endTime, title, description, guests);
+  }
 
   var loaded = false;
   function showEquipmentReservationScreen(){
@@ -45,6 +128,8 @@ $(function() {
     }
     $(".appSection").hide();
     $(".equipmentReservation").show();
+    $(".eqResErrors").html("");
+    $(".eqResMessages").html("");
     if (loaded){
       return;
     }
@@ -55,6 +140,7 @@ $(function() {
     $(".equipmentreservationTemplate").hide();
     var i = 0;
     var eqgroupkeys = Object.keys(equipmentList);
+    var submitting = false;
     $.each(eqgroupkeys, function(index, eqgroupkey){
       var eqgroup = equipmentList[eqgroupkey];
       var itemkeys = Object.keys(eqgroup.items);
@@ -62,21 +148,135 @@ $(function() {
         i++;
         var item = eqgroup.items[itemkey];    
         var elem = $(sourceelem).clone(true);
+        var itemname= eqgroupkey + " : " + itemkey;
+        $(elem).addClass("equipmentReservationCard");
         $("#equipmentreservation_collapseN", elem).attr("aria-labelledby","equipmentreservation_headingN"+i);
         $("#equipmentreservation_collapseN", elem).attr("id","equipmentreservation_collapseN"+i);
         $("#equipmentreservation_headingN", elem).attr("id","equipmentreservation_headingN"+i);
         $(".equipmentreservationButton", elem).attr("data-target","#equipmentreservation_collapseN"+i);
         $(".equipmentreservationButton", elem).attr("aria-controls","equipmentreservation_collapseN"+i);
-        $(".equipmentreservationButton",elem).text(eqgroupkey + " : " + itemkey);
+        $(".equipmentreservationButton",elem).text(itemname);
     
+        // show current reservations
+        showCurrentReservations(itemname,  $(".equipmentCurrentReservationsList", elem));
+
+        // setup datetime pickers:
+        $(".eqResDateStartDate",elem).datetimepicker({
+          step: 15,
+          allowBlank: true,
+          onSelectDate: function(seldate){
+            // maxMinTimeLogic(seldate, "start", this)
+          },
+          onShow:  function(seldate){
+             console.log("onshow");
+             //maxMinTimeLogic(seldate, "start", this)
+          },
+          onClose: function(seldate){
+            console.log("close");
+            console.log(seldate);
+          },
+          validateOnBlur : false,
+          todayButton : true,
+          format: 'm/d/Y g:i A',
+          formatTime: 'g:i A'        
+        });
+        $(".eqResDateEndDate",elem).datetimepicker({
+          step: 15,
+          allowBlank: true,
+          onSelectDate: function(seldate){
+            // maxMinTimeLogic(seldate, "start", this)
+          },
+          onShow:  function(seldate){
+             console.log("onshow");
+             //maxMinTimeLogic(seldate, "start", this)
+          },
+          onClose: function(seldate){
+            console.log("close");
+            console.log(seldate);
+          },
+          validateOnBlur : false,
+          todayButton : true,
+          format: 'm/d/Y g:i A',
+          formatTime: 'g:i A'        
+        });
+
+
+        $(".eqResDateSubmit",elem).click(function(){
+          if(submitting){
+            return false;
+          }
+          submitting = true;
+          $(".eqResMessages").html("Checking for Overlaps...");
+          
+          var container = $(this).closest(".equipmentReservationCard");
+          var itemname = $(".equipmentreservationButton",container).text();
+          var reserver = GLOBALS.user.thisUserData.netid;
+          var startTime = $(".eqResDateStartDate", container).val();
+          var endTime = $(".eqResDateEndDate", container).val();
+          $(".eqResErrors").html("");          
+          
+          console.log("saving reservation");
+          console.log(itemname);
+          console.log(reserver);
+          console.log(startTime);
+          console.log(endTime);
+                    
+          getOverlappingEquipmentReservations(itemname, startTime, endTime, function(){
+            $(".eqResMessages").html("Submitting...");
+            saveReservation(itemname, reserver, startTime, endTime, function(){
+              $(".eqResDateStartDate", container).val("");
+              $(".eqResDateEndDate", container).val("");
+              getReservationEvents(function(){
+                submitting = false;
+                showCurrentReservations(itemname, $(".equipmentCurrentReservationsList",container));
+                $(".eqResMessages").html("Reservation Made");
+              });
+            });                  
+          },
+          function(){
+            console.log("overlapping reservation");
+            $(".eqResMessages").html("");
+            $(".eqResErrors").html("This reservation overlaps with an existing reservation");
+            submitting = false;
+          });
+          
+          
+          return false;
+        });
+
         $(elem).appendTo(".equipmentreservationAccordion");        
       });
     });
-    $('.findamaker_collapse').collapse();  
+    $('.equipmentreservation_collapse').collapse();  
+    
+    
+  $("#eqResDateTimePicker").datetimepicker({
+    step: 15,
+    allowBlank: true,
+    onSelectDate: function(seldate){
+      // maxMinTimeLogic(seldate, "start", this)
+    },
+    onShow:  function(seldate){
+       console.log("onshow");
+       //maxMinTimeLogic(seldate, "start", this)
+    },
+    onClose: function(seldate){
+      console.log("close");
+      console.log(seldate);
+    },
+    validateOnBlur : false,
+    todayButton : true,
+    format: 'm/d/y g:i A',
+    formatTime: 'g:i A'        
+  });    
+    
+    
   }
   
   getEquipmentList();
   getOpenHours();
+  getReservationEvents();
+  
   $(".showEquipmentReservation").click(showEquipmentReservationScreen);
 
 });

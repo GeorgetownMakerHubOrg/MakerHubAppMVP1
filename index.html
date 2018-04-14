@@ -288,7 +288,7 @@
   function getThisUserData(netid){
     console.log(netid);
     var searched_array = GLOBALS.user.allUserData.userData.data.filter(function(a){
-      if(netid.toLowerCase() == a.netid.toLowerCase()){
+      if(a.netid && netid && netid.toLowerCase() == a.netid.toLowerCase()){
         return true;
       } else {
         return false;
@@ -308,7 +308,7 @@
   
   function findUser(netid){
     var searched_array = GLOBALS.user.allUserData.userData.data.filter(function(a){
-      if(netid.toLowerCase() == a.netid.toLowerCase()){
+      if(a.netid && netid && netid.toLowerCase() == a.netid.toLowerCase()){
         return true;
       } else {
         return false;
