@@ -206,7 +206,7 @@ $(function() {
             return false;
           }
           submitting = true;
-          $(".eqResMessages").html("Checking for Overlaps...");
+          $(".eqResMessages", elem).html("Checking for Overlaps...");
           
           var container = $(this).closest(".equipmentReservationCard");
           var itemname = $(".equipmentreservationButton",container).text();
@@ -222,21 +222,21 @@ $(function() {
           console.log(endTime);
                     
           getOverlappingEquipmentReservations(itemname, startTime, endTime, function(){
-            $(".eqResMessages").html("Submitting...");
+            $(".eqResMessages", elem).html("Submitting...");
             saveReservation(itemname, reserver, startTime, endTime, function(){
               $(".eqResDateStartDate", container).val("");
               $(".eqResDateEndDate", container).val("");
               getReservationEvents(function(){
                 submitting = false;
                 showCurrentReservations(itemname, $(".equipmentCurrentReservationsList",container));
-                $(".eqResMessages").html("Reservation Made");
+                $(".eqResMessages", elem).html("Reservation Made");
               });
             });                  
           },
           function(){
             console.log("overlapping reservation");
-            $(".eqResMessages").html("");
-            $(".eqResErrors").html("This reservation overlaps with an existing reservation");
+            $(".eqResMessages", elem).html("");
+            $(".eqResErrors", elem).html("This reservation overlaps with an existing reservation");
             submitting = false;
           });
           

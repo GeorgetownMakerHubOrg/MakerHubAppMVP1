@@ -8,7 +8,7 @@ function getModules() {
     "findamaker",
     "logappuse",
     "purchaserequest",
-//    "equipmentreservation",
+    "equipmentreservation",
     "brokenequipment",
     ];
   
