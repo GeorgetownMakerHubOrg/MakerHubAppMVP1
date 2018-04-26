@@ -5,6 +5,9 @@ $(function() {
   var openHours = false;
   var reservationEvents = false;
   moment().format();
+  //2013-03-18T13:00
+  var dtformat = "YYYY-MM-DDTHH:mm"
+
   
   var now = moment();
   var displayStartTime = moment(now).add(-5, "minutes");
@@ -170,6 +173,9 @@ $(function() {
         
         $(".eqResDateStartDate",elem).attr("id","eqResDateStartDate"+i); 
         $(".eqResDateEndDate",elem).attr("id","eqResDateEndDate"+i); 
+        console.log(now.format(dtformat));
+        $(".eqResDateStartDate",elem).val(now.format(dtformat)); 
+        $(".eqResDateEndDate",elem).val(moment(now).add(1, "hours").format(dtformat)); 
 
         $(".eqResDateSubmit",elem).click(function(){
           if(submitting){
@@ -218,8 +224,20 @@ $(function() {
       });
     });
     $('.equipmentreservation_collapse').collapse();  
-    
-    
+    /*
+  $('input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"]').each(function() {
+    var el = this, type = $(el).attr('type');
+    if ($(el).val() == '') $(el).attr('type', 'text');
+    $(el).focus(function() {
+        $(el).attr('type', type);
+        el.click();
+    });
+    $(el).blur(function() {
+        if ($(el).val() == '') $(el).attr('type', 'text');
+    });
+  });
+  */
+/*
   $("#eqResDateTimePicker").datetimepicker({
     step: 15,
     allowBlank: true,
@@ -239,7 +257,7 @@ $(function() {
     format: 'm/d/y g:i A',
     formatTime: 'g:i A'        
   });    
-    
+*/    
     
   }
   
