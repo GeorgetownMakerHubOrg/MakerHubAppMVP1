@@ -148,8 +148,13 @@ $(function() {
         i++;
         var item = eqgroup.items[itemkey];    
         var elem = $(sourceelem).clone(true);
+        
+        $(elem).appendTo(".equipmentreservationAccordion");        
+        
+        
         var itemname= eqgroupkey + " : " + itemkey;
         $(elem).addClass("equipmentReservationCard");
+       
         $("#equipmentreservation_collapseN", elem).attr("aria-labelledby","equipmentreservation_headingN"+i);
         $("#equipmentreservation_collapseN", elem).attr("id","equipmentreservation_collapseN"+i);
         $("#equipmentreservation_headingN", elem).attr("id","equipmentreservation_headingN"+i);
@@ -161,45 +166,10 @@ $(function() {
         showCurrentReservations(itemname,  $(".equipmentCurrentReservationsList", elem));
 
         // setup datetime pickers:
-        $(".eqResDateStartDate",elem).datetimepicker({
-          step: 15,
-          allowBlank: true,
-          onSelectDate: function(seldate){
-            // maxMinTimeLogic(seldate, "start", this)
-          },
-          onShow:  function(seldate){
-             console.log("onshow");
-             //maxMinTimeLogic(seldate, "start", this)
-          },
-          onClose: function(seldate){
-            console.log("close");
-            console.log(seldate);
-          },
-          validateOnBlur : false,
-          todayButton : true,
-          format: 'm/d/Y g:i A',
-          formatTime: 'g:i A'        
-        });
-        $(".eqResDateEndDate",elem).datetimepicker({
-          step: 15,
-          allowBlank: true,
-          onSelectDate: function(seldate){
-            // maxMinTimeLogic(seldate, "start", this)
-          },
-          onShow:  function(seldate){
-             console.log("onshow");
-             //maxMinTimeLogic(seldate, "start", this)
-          },
-          onClose: function(seldate){
-            console.log("close");
-            console.log(seldate);
-          },
-          validateOnBlur : false,
-          todayButton : true,
-          format: 'm/d/Y g:i A',
-          formatTime: 'g:i A'        
-        });
-
+        // AnyTime_picker()
+        
+        $(".eqResDateStartDate",elem).attr("id","eqResDateStartDate"+i); 
+        $(".eqResDateEndDate",elem).attr("id","eqResDateEndDate"+i); 
 
         $(".eqResDateSubmit",elem).click(function(){
           if(submitting){
@@ -244,7 +214,7 @@ $(function() {
           return false;
         });
 
-        $(elem).appendTo(".equipmentreservationAccordion");        
+//        $(elem).appendTo(".equipmentreservationAccordion");        
       });
     });
     $('.equipmentreservation_collapse').collapse();  
