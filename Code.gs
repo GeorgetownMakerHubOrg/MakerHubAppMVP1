@@ -8,7 +8,6 @@ if(getIsCaching){
   var cacheModules = getIsCaching();
 }
 
-
 var MeritBadges = [
   'Laser Cutter',
   '3D Printing',	
