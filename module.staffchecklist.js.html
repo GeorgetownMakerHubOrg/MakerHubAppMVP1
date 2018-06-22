@@ -72,6 +72,21 @@ $(function() {
       }
     });  
     console.log(staff);
+    GLOBALS.checklistUser = staff;
+    
+    google.script.run
+    .withFailureHandler(function(msg){
+      console.log("error saveChecklistData");
+      console.log(msg);
+    })
+    .withSuccessHandler(function(data){
+      console.log("saveChecklistData");
+      console.log(data);
+    })
+    .updateChecklistData(staff.NetId, staff);
+    
+    
+    
   }
   
 //Staff Orientation	Sent Welcome Email	Headshot	On Facebook Group	Pic on Website	Quote on Website	Year, Major	Bio/MH Sentence	Available Hours	shift on google calendar	On Share Drive	On Mailing List	In Google Group	Signed Agreement	Assigned Keycode	Added to Trello	Trello ID	Sent link re Minors	Completed Minors form	Laser Cutter Safety Orientation	Laser Cutter SOP training  
