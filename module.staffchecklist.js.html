@@ -1,0 +1,119 @@
+<script>
+
+
+$(function() {
+
+  GLOBALS.allChecklistData = false;
+  $(".staffOnlyUserMenuItem").hide();
+  GLOBALS.checklistUser = false;
+  refreshChecklistData();
+  $(".showStaffChecklist").click(function(){showStaffChecklistScreen(); return false;});
+
+
+  function showStaffChecklistScreen(){
+    $(".appSection").hide();
+    $(".staffChecklist").show();
+    $(".staffChecklistResult").text("");
+    $(".staffChecklistError").text("");
+    $(".staffChecklistMessage").text("");
+    $("#staffChecklistSubmit").off("click");
+    $("#staffChecklistSubmit").click(function(){
+      saveChecklistData();
+    });
+    clearSection();
+    populateSection();
+  }
+  
+  GLOBALS.addEventListener("getThisUserData", function(){
+    GLOBALS.checklistUser = false;
+    var netid = GLOBALS.user.thisUserData.netid.toLowerCase();
+    var filtered = GLOBALS.allChecklistData.filter(function(item){
+      return item.NetId.toLowerCase() == netid
+    });
+    if(filtered.length > 0){
+      GLOBALS.checklistUser = filtered[0];
+    }    
+    $(".staffOnlyUserMenuItem").hide();
+    if(GLOBALS.checklistUser){
+      $(".staffOnlyUserMenuItem").show();
+    }
+  });
+  
+  function refreshChecklistData(){
+    google.script.run
+    .withFailureHandler(function(msg){
+      console.log("error getAllStaffChecklistData");
+      console.log(msg);
+    })
+    .withSuccessHandler(function(data){
+      console.log("getAllStaffChecklistData");
+      console.log(data);
+      GLOBALS.allChecklistData = data.data;   
+    })
+    .getAllStaffChecklistData();
+  }
+  
+  
+  function saveChecklistData(){
+    var staff = GLOBALS.checklistUser;
+    console.log("saving");
+    staff["Phone Number"] = $("#staff_checklist_phone_number",".staffChecklistContent").val();
+    staff["Trello ID"] = $("#staff_checklist_trelloid",".staffChecklistContent").val();
+    staff["Bio/MH Sentence"] = $("#staff_checklist_mh_sentence",".staffChecklistContent").val();
+    staff["Year, Major"] = $("#staff_checklist_year_and_major",".staffChecklistContent").val();
+
+    $(".staffchecklist_checkbox").each(function(item){
+      var name = $(this).data("colname");
+      console.log("name " +  $(this).prop("checked"));
+      if($(this).prop("checked")){
+        staff[name] = "Yes";
+      }else{
+        staff[name] = "";
+      }
+    });  
+    console.log(staff);
+  }
+  
+//Staff Orientation	Sent Welcome Email	Headshot	On Facebook Group	Pic on Website	Quote on Website	Year, Major	Bio/MH Sentence	Available Hours	shift on google calendar	On Share Drive	On Mailing List	In Google Group	Signed Agreement	Assigned Keycode	Added to Trello	Trello ID	Sent link re Minors	Completed Minors form	Laser Cutter Safety Orientation	Laser Cutter SOP training  
+  function clearSection(){
+    $("#staff_checklist_phone_number",".staffChecklistContent").val("");
+    $("#staff_checklist_trelloid",".staffChecklistContent").val("");
+    $("#staff_checklist_mh_sentence",".staffChecklistContent").val("");
+    $("#staff_checklist_year_and_major",".staffChecklistContent").val("");
+    
+    $(".staffchecklist_checklabel").addClass("labelnotchecked");
+    $(".staffchecklist_checklabel").removeClass("labelchecked");
+    $(".staffchecklist_checkbox").prop("checked", false);
+  
+  }
+  
+  function populateSection(){
+    var staff = GLOBALS.checklistUser;
+    console.log(staff);
+    $("#staff_checklist_phone_number",".staffChecklistContent").val(staff["Phone Number"]);
+    $("#staff_checklist_trelloid",".staffChecklistContent").val(staff["Trello ID"]);
+    $("#staff_checklist_mh_sentence",".staffChecklistContent").val(staff["Bio/MH Sentence"]);
+    $("#staff_checklist_year_and_major",".staffChecklistContent").val(staff["Year, Major"]);
+
+    $(".staffchecklist_checkbox").each(function(item){
+      console.log($(this).data("colname"));
+      if(staff[$(this).data("colname")] && staff[$(this).data("colname")].trim() != ""){
+        console.log("yes");
+        $(this).parent().addClass("labelchecked");
+        $(this).parent().removeClass("labelnotchecked");
+        $(this).prop("checked", true);
+      }else{
+        console.log("no " + staff[$(this).data("colname")]);
+        $(this).prop("checked", false);
+        $(this).parent().addClass("labelnotchecked");
+        $(this).parent().removeClass("labelchecked");
+      }
+    });
+  }
+
+});
+
+
+</script>
+
+
