@@ -3,6 +3,10 @@
 
 $(function() {
 
+  var file = false;
+  var filedata = false;
+  var reader = new FileReader();
+
   GLOBALS.allChecklistData = false;
   $(".staffOnlyUserMenuItem").hide();
   GLOBALS.checklistUser = false;
@@ -18,7 +22,7 @@ $(function() {
     $(".staffChecklistMessage").text("");
     $("#staffChecklistSubmit").off("click");
     $("#staffChecklistSubmit").click(function(){
-      saveChecklistData();
+      submitClicked();
     });
     clearSection();
     populateSection();
@@ -39,6 +43,10 @@ $(function() {
     }
   });
   
+  function submitClicked(){
+    loadFileThenSave();
+  }
+  
   function refreshChecklistData(){
     google.script.run
     .withFailureHandler(function(msg){
@@ -52,8 +60,23 @@ $(function() {
     })
     .getAllStaffChecklistData();
   }
-  
-  
+
+  reader.onloadend = function(e) {
+    filedata = e.target.result;
+    console.log(file.name);
+    console.log(filedata);
+    saveChecklistData();
+  };
+ 
+  function loadFileThenSave(){
+    file = $('#checklist_headshot')[0].files[0];
+    if(file){
+      reader.readAsDataURL(file);
+    }else{
+      console.log("no file to upload");
+    }
+  }
+
   function saveChecklistData(){
     var staff = GLOBALS.checklistUser;
     console.log("saving");
@@ -61,7 +84,9 @@ $(function() {
     staff["Trello ID"] = $("#staff_checklist_trelloid",".staffChecklistContent").val();
     staff["Bio/MH Sentence"] = $("#staff_checklist_mh_sentence",".staffChecklistContent").val();
     staff["Year, Major"] = $("#staff_checklist_year_and_major",".staffChecklistContent").val();
-
+    if(file.name && file.name.trim() != ""){
+      staff["Pic on Website"] = file.name;
+    }
     $(".staffchecklist_checkbox").each(function(item){
       var name = $(this).data("colname");
       console.log("name " +  $(this).prop("checked"));
@@ -83,10 +108,7 @@ $(function() {
       console.log("saveChecklistData");
       console.log(data);
     })
-    .updateChecklistData(staff.NetId, staff);
-    
-    
-    
+    .updateChecklistData(staff.NetId, staff, filedata); 
   }
   
 //Staff Orientation	Sent Welcome Email	Headshot	On Facebook Group	Pic on Website	Quote on Website	Year, Major	Bio/MH Sentence	Available Hours	shift on google calendar	On Share Drive	On Mailing List	In Google Group	Signed Agreement	Assigned Keycode	Added to Trello	Trello ID	Sent link re Minors	Completed Minors form	Laser Cutter Safety Orientation	Laser Cutter SOP training  
