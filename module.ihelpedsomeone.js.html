@@ -1,0 +1,139 @@
+<script>
+
+
+$(function() {
+
+  moment().format();
+  
+  
+function resetScreen(){
+    $(".iHelpedSomeonesubmitresult").text("");
+   // $("#equipmentDescription").val("");
+    $("#iHelpedSomeoneSubmit").off("click");
+    $(".iHelpedSomeonesubmitreport").text("");
+    $(".iHelpedSomeoneMessage").text("");
+    $(".iHelpedSomeoneError").text("");
+
+
+    $("#ihelpedsomeone_interaction_description").val("");
+    $("#ihelpedsomeone_difficulty:selected").prop("selected", false)
+    $("#ihelpedsomeone_difficulty").val("");
+    $("#ihelpedsomeone_problemtype:selected").prop("selected", false)
+    $("#ihelpedsomeone_problemtype").val("");
+    $("#ihelpedsomeone_problemtype_other").val("");
+    $( ".ihelpedsomeone_areaofhelp" ).prop( "checked", false );
+    $("#ihelpedsomeone_areaofhelp_other").val("");
+    $("#ihelpedsomeone_problemresolution:selected").prop("selected", false)
+    $("#ihelpedsomeone_problemresolution").val("");
+    $("#ihelpedsomeone_problemresolution_other").val("");
+    $("#ihelpedsomeone_time:selected").prop("selected", false)
+    $("#ihelpedsomeone_time").val("");
+
+    $(".ihelpedsomeone_areaofhelp").parent().addClass("labelnotchecked");
+    $(".ihelpedsomeone_areaofhelp").parent().removeClass("labelchecked");
+
+
+
+}
+
+
+function showIHelpedSomeoneScreen(){
+    console.log("showing helped screen");
+    $(".appSection").hide();
+    resetScreen();
+    $(".iHelpedSomeone").show();
+       
+    var submitting = false;
+    $("#iHelpedSomeoneSubmit").click(function(){
+      console.log("submitting");
+      if(submitting){
+        return false;
+      }
+      submitting = true;
+      
+      
+      var now = moment();
+      var timestamp = now.format("MM/DD/YYYY HH:mm:ss");
+       
+      var description = $("#ihelpedsomeone_interaction_description").val();
+      var difficulty = $("#ihelpedsomeone_difficulty").val();
+      var problemtype =  $("#ihelpedsomeone_problemtype").val();
+      var problemtype_other =  $("#ihelpedsomeone_problemtype_other").val();
+      if(problemtype.trim() == "" && problemtype_other.trim() != ""){
+        problemtype = problemtype_other;
+      }
+      var areasofhelp = $(".ihelpedsomeone_areaofhelp:checked").map(function() {
+        return this.value;
+      }).get();
+      var areaofhelp_other =  $("#ihelpedsomeone_areaofhelp_other").val();
+      if(areaofhelp_other.trim != ""){
+        areasofhelp.push(areaofhelp_other);
+      }
+      areasofhelp = areasofhelp.join(", ");
+      var problemresolution =  $("#ihelpedsomeone_problemresolution").val();
+      var problemresolution_other =  $("#ihelpedsomeone_problemresolution_other").val();
+      if(problemresolution.trim() == "" && problemresolution_other.trim() != ""){
+        problemresolution = problemresolution_other;
+      }
+      var time =  $("#ihelpedsomeone_time").val();
+//      var difficulty = $("#difficulty:selected").val();
+
+      console.log(description);
+      console.log(difficulty);
+      console.log(problemtype);
+      console.log(areasofhelp);
+      console.log(problemresolution);
+      console.log(time);
+      
+      
+      var submitData = {
+        "Timestamp" : timestamp,
+        "My NetID" : GLOBALS.user.sessionUser.netid,
+        "Briefly Describe the Interaction" : description,
+        "Their issue/problem/question was" : difficulty,
+        "Problem Type the four types" : problemtype,
+        "The area(s) they wanted help with were:" : areasofhelp,
+        "Did they get their questions answered/problem solved?" : problemresolution,
+        "How much time did you spend helping them?" : time
+      };
+      
+      console.log(submitData);
+      
+      google.script.run
+      .withFailureHandler(function(e){
+        console.log("ERROR in insertIHelpedSomoneData ");
+        console.log(e)
+        $(".iHelpedSomeoneError").text("Doh! there was a problem submitting: " + e);
+        submitting = false;
+      })
+      .withSuccessHandler(function(data){
+        console.log("IHelpedSomoneData logged");
+        console.log(data);
+        $(".iHelpedSomeoneMessage").text("Thanks! Helping is awesome!");
+        submitting = false;
+      })
+      .insertIHelpedSomoneData(submitData);
+    });
+}
+
+
+$(".showIHelpedSomeone").click(showIHelpedSomeoneScreen);
+
+// ui features
+$("input:checkbox").click(function(){
+  console.log("clicked");
+  console.log(this.checked);
+  $(this).parent().addClass((this.checked ? "labelchecked" : "labelnotchecked"));
+  $(this).parent().removeClass((this.checked ? "labelnotchecked" : "labelchecked"));
+});
+
+
+
+});
+
+
+
+
+</script>
+
+

@@ -2,7 +2,12 @@
 var userTable = SpreadsheetApp.openById(getUserTableId());
 var safetyTable = SpreadsheetApp.openById(getSafetyTableId());
 
+
 var cacheModules = false;
+if(getIsCaching){
+  var cacheModules = getIsCaching();
+}
+
 
 var MeritBadges = [
   'Laser Cutter',
@@ -20,6 +25,7 @@ var MeritBadges = [
   'Button Maker',
   'Raspberry Pi'
 ];
+
 
 function getMeritBadges(){
   return MeritBadges; 

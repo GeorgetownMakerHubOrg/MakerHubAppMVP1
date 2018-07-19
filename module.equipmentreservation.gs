@@ -150,13 +150,14 @@ var equipmentList = {
       "Form2 Resin Printer" : {}
     }
   },
-  "Vinyl Cutter" : {
+
+  "Digital Workstation/Vinyl Cutter" : {
     runsAfterHourse : false,
     requiresFullTimeAuthorizedUser : false,
     meritBadge : "Vinyl Cutter",
     items : {
-      "Silhouette 1" : {},
-      "Silhouette 2" : {},
+      "Larger Imac/Silhouette Vinyl Cutter/SewArt" : {},
+      "Smaller Imac/Silhouette Vinyl Cutter" : {},
     }
   },
   "Laser Cutter" : {
