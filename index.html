@@ -60,7 +60,7 @@
 		<?!=include("js.greensock"); ?>
 
   	</head>
-  
+
 		<body>
 			<div class="page-boxed" >
 					
@@ -253,6 +253,7 @@
     }).getCurrentSessionNetId();  
   }
   
+
   function updateAppForSessionUser(){
     if(GLOBALS.user.sessionUser.netid){
       $(".sessionUserNetID").text(GLOBALS.user.sessionUser.netid);
@@ -299,6 +300,7 @@
     });
     if(searched_array.length > 0){
       GLOBALS.user.thisUserData = searched_array[0];
+
       console.log("in getThisUserData");
       console.log(GLOBALS.user.thisUserData);  
       $(".userName").text(GLOBALS.user.thisUserData.name);
@@ -327,7 +329,7 @@
       return false;
     }
   }
-  
+
   function initDisplay(){
     $(".appSection").hide();
     

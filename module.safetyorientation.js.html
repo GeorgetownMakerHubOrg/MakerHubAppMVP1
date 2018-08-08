@@ -72,9 +72,9 @@ $(function() {
       $.each(sectionrows, function(index, row){
         var footnotetext = "";
         if(row.footnote){
-          footnotetext = "<br><i>"+row.footnote+"</i>";
+          footnotetext = "<br><span class='footnoteblue'><i>"+row.footnote+"</i></span>";
         }
-        $(".safetyOrientationSectionList", elem).append("<li class='safetyrule'><i class='fa fa-bullhorn'></i> "+row.text+footnotetext+"</li>");
+        $(".safetyOrientationSectionList", elem).append("<li class='safetyrule'><i class='fa fa-bullhorn blue'></i> "+row.text+footnotetext+"</li>");
       });
     
     
@@ -106,7 +106,7 @@ $(function() {
       $.each(footerrows, function(index, row){
         var footnotetext = "";
         if(row.footnote){
-          footnotetext = "<br><i>"+row.footnote+"</i>";
+          footnotetext = "<br><span class='footnotelarge'><i>"+row.footnote+"</i></span>";
         }
         $(".safetyOrientationSectionFooter", elem).append("<li class='safetyfooter'> "+row.text+footnotetext+"</li>");
       });

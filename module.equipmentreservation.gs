@@ -150,6 +150,7 @@ var equipmentList = {
       "Form2 Resin Printer" : {}
     }
   },
+
   "Digital Workstation/Vinyl Cutter" : {
     runsAfterHourse : false,
     requiresFullTimeAuthorizedUser : false,

@@ -26,6 +26,7 @@ var MeritBadges = [
   'Raspberry Pi'
 ];
 
+
 function getMeritBadges(){
   return MeritBadges; 
 }
