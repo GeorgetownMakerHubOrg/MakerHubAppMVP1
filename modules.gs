@@ -10,7 +10,8 @@ function getModules() {
     "purchaserequest",
     "equipmentreservation",
     "brokenequipment",
-    "ihelpedsomeone"
+    "ihelpedsomeone",
+    "staffchecklist"
     ];
   
   return modules;

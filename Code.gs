@@ -8,23 +8,24 @@ if(getIsCaching){
   var cacheModules = getIsCaching();
 }
 
+
 var MeritBadges = [
   'Laser Cutter',
   '3D Printing',	
-  'FormLabs',	
-  'Vinyl Cutter',
+  'Hand Tools',	
   'HandiBot',	
+  'Power Tools',
+  'Print Shop',	
   'Sewing Machine',
   'Embroidery Machine',	
+  'Vinyl Cutter',
+  'FormLabs',	
   'Soldering',
   'Arduino',
   'Button Maker',
-  'Print Shop',	
-  'Raspberry Pi',
-  'Woodshop Level 1 Tools',	
-  'Woodshop Level 2 Tools',
-  'Woodshop Level 3 Tools',
+  'Raspberry Pi'
 ];
+
 
 function getMeritBadges(){
   return MeritBadges; 

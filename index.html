@@ -60,7 +60,7 @@
 		<?!=include("js.greensock"); ?>
 
   	</head>
-  
+
 		<body>
 			<div class="page-boxed" >
 					
@@ -215,6 +215,7 @@
   function getSessionUser(callback, force){
     if(GLOBALS.user.sessionUser && !force){
       callback(GLOBALS.user.sessionUser);
+      GLOBALS.triggerEvent("getSessionUser");
       return GLOBALS.user.sessionUser;
     }
     GLOBALS.user.sessionUser = false;
@@ -242,15 +243,17 @@
           }else{
             GLOBALS.user.sessionUser.visitorEditPriv = false;
           }
-          
         }else{
           GLOBALS.user.sessionUser = false; 
         }
+        GLOBALS.triggerEvent("getSessionUser");
+        console.log("lieb 249");
         console.log(GLOBALS.user.sessionUser);
         if(callback){callback(GLOBALS.user.sessionUser);}
     }).getCurrentSessionNetId();  
   }
   
+
   function updateAppForSessionUser(){
     if(GLOBALS.user.sessionUser.netid){
       $(".sessionUserNetID").text(GLOBALS.user.sessionUser.netid);
@@ -283,6 +286,7 @@
         console.log(GLOBALS.user.allUserData);
         if(callback){callback();}
     }).getUserData(); 
+    GLOBALS.triggerEvent("getAllUserData");
   }  
   
   function getThisUserData(netid){
@@ -296,6 +300,8 @@
     });
     if(searched_array.length > 0){
       GLOBALS.user.thisUserData = searched_array[0];
+
+      console.log("in getThisUserData");
       console.log(GLOBALS.user.thisUserData);  
       $(".userName").text(GLOBALS.user.thisUserData.name);
       $(".ifVisitorPresent").show();
@@ -303,6 +309,8 @@
       // show "not found" 
       $(".userName").text("netId " + netid +  " not found");
     }
+    GLOBALS.triggerEvent("getThisUserData");
+
   }
   
   
@@ -321,11 +329,7 @@
       return false;
     }
   }
-  
 
-  
-
-  
   function initDisplay(){
     $(".appSection").hide();
     
@@ -352,6 +356,7 @@
     $("#netidinput").val("")
     GLOBALS.user.thisUserData = false;
     initDisplay();
+    GLOBALS.triggerEvent("resetVisitor");
   }
   
   var imageUrls = {};
@@ -369,6 +374,30 @@
       }
     }).getImageUrl(imagename);
   }  
+ 
+ 
+  var eventListeners = {};
+  
+  function addEventListener(eventName, callback){
+    console.log("adding event listener for " +eventName);
+    if(!eventListeners[eventName]){
+      eventListeners[eventName] = [];
+    }
+    eventListeners[eventName].push(callback);
+  }
+  
+  
+  function triggerEvent(eventName){
+    console.log("calleing event " + eventName);
+    console.log(eventListeners);
+    if(!eventListeners[eventName]){
+      return;
+    }
+    for(var i = 0; i < eventListeners[eventName].length; i++){
+      console.log(i);
+      eventListeners[eventName][i]();
+    }
+  }
   
   
   function placeImages(){
@@ -394,7 +423,9 @@
 
     GLOBALS.meritBadges = GLOBALS.meritBadges ? GLOBALS.meritBadges : {};
     GLOBALS.meritBadges.meritBadges = meritBadges;
-
+    
+    GLOBALS.addEventListener = addEventListener;
+    GLOBALS.triggerEvent = triggerEvent;
 
     initDisplay();
     GLOBALS.user.getAllUserData(function(){ GLOBALS.user.getSessionUser(GLOBALS.user.updateAppForSessionUser);});    
