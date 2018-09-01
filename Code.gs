@@ -16,6 +16,7 @@ var MeritBadges = [
   'HandiBot',	
   'Power Tools',
   'Print Shop',	
+  'Bookbinding',
   'Sewing Machine',
   'Embroidery Machine',	
   'Vinyl Cutter',
@@ -23,7 +24,8 @@ var MeritBadges = [
   'Soldering',
   'Arduino',
   'Button Maker',
-  'Raspberry Pi'
+  'Raspberry Pi',
+  'Programming'
 ];
 
 
