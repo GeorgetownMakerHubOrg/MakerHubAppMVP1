@@ -247,7 +247,6 @@
           GLOBALS.user.sessionUser = false; 
         }
         GLOBALS.triggerEvent("getSessionUser");
-        console.log("lieb 249");
         console.log(GLOBALS.user.sessionUser);
         if(callback){callback(GLOBALS.user.sessionUser);}
     }).getCurrentSessionNetId();  
