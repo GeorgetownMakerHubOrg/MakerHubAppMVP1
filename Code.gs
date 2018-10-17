@@ -5,7 +5,7 @@ var safetyTable = SpreadsheetApp.openById(getSafetyTableId());
 
 var cacheModules = false;
 if(getIsCaching){
-  cacheModules = getIsCaching();
+//  cacheModules = getIsCaching();
 }
 
 

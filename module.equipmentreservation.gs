@@ -138,7 +138,6 @@ var equipmentList = {
         "MakerBot 1" : {},
         "MakerBot 2" : {},
         "Ultimaker 2+" : {},
-        "Taz 6 FlexyDually" : {},
         "MonoPrice Selecct" : {}        
     }
   },

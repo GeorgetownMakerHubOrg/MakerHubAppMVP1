@@ -80,7 +80,7 @@ $(function() {
       var resStart = moment(reservation.startTime);
       var resEnd = moment(reservation.endTime);         
       var time = resStart.format("ddd MMM Do h:mm a") + " - "  + resEnd.format("ddd MMM Do h:mm a");        
-      var html = "<span class='reservation'>"+ time + "("+reservation.guestList[0].email+") </span><br/>";
+      var html = "<span class='reservation'>"+ time + "("+(reservation.guestList[0] ? reservation.guestList[0].email : "" )+") </span><br/>";
       $(containerElem).append(html);
     });  
   }

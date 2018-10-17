@@ -1,0 +1,75 @@
+<script>
+
+
+$(function() {
+  console.log("nonetid");
+  GLOBALS.addEventListener("getSessionUser", function(){
+    console.log("in nonetid event triggered");
+    console.log(GLOBALS.user.sessionUser);
+    if(GLOBALS.user.sessionUser){
+      $(".anonOnly").hide();
+    }
+  });
+
+
+  function showEnterNetIDScreen(){
+    $(".appSection").hide();
+    $(".setNetID").show();
+    $("#setnetidinput").text("");
+    $("#setNetIdForm").off("submit");
+    
+    var submitting = false;
+    $("#setNetIdForm").submit(function(){
+      console.log("submitting");
+      if(submitting){
+        return false;
+      }
+      submitting = true;
+      var netid = $("#setnetidinput").val();
+      console.log("entered" + netid);
+      
+      try{
+      if(netid.trim() != ""){
+        console.log(GLOBALS.user.allUserData.userData.data);
+        var searched_array = GLOBALS.user.allUserData.userData.data.filter(function(a){
+          if(netid.toLowerCase() == a.netid.toLowerCase()){
+            return true;
+          } else {
+            return false;
+          } 
+        });
+        GLOBALS.user.sessionUser = searched_array[0];
+        if(GLOBALS.user.sessionUser.role.toLowerCase() == "manager" ||
+          GLOBALS.user.sessionUser.role.toLowerCase() == "staff" ||
+          GLOBALS.user.sessionUser.role.toLowerCase() == "trusted faculty" ||
+          GLOBALS.user.sessionUser.role.toLowerCase() == "authorized faculty" ||
+          GLOBALS.user.sessionUser.role.toLowerCase() == "volunteer"){
+          GLOBALS.user.sessionUser.visitorEditPriv = true;
+        }else{
+          GLOBALS.user.sessionUser.visitorEditPriv = false;
+        }
+      }else{
+        GLOBALS.user.sessionUser = false; 
+      }
+      console.log(GLOBALS.user.sessionUser);
+      GLOBALS.user.updateAppForSessionUser()     
+      GLOBALS.triggerEvent("getSessionUser");
+        
+      }catch(e){
+        console.log("error ");
+        console.log(e);
+      }
+      
+      return false;
+    });
+    
+  }
+
+  $(".showNoNetID").click(function(){
+    console.log("shownonetid window");
+    showEnterNetIDScreen();
+  });
+
+});
+</script>
+

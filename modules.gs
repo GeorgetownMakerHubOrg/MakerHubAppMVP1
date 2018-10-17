@@ -11,7 +11,9 @@ function getModules() {
     "equipmentreservation",
     "brokenequipment",
     "ihelpedsomeone",
-    "staffchecklist"
+    "staffchecklist",
+    "nonetid"
+    
     ];
   
   return modules;
