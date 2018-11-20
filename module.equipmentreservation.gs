@@ -137,7 +137,8 @@ var equipmentList = {
     items : {
         "MakerBot 1" : {},
         "MakerBot 2" : {},
-        "Ultimaker 2+" : {},
+        "Ultimaker 1" : {},
+        "Ultimaker 2" : {},
         "MonoPrice Selecct" : {}        
     }
   },
