@@ -12,9 +12,10 @@ if(getIsCaching){
 var MeritBadges = [
   'Laser Cutter',
   '3D Printing',	
-  'Hand Tools',	
-  'HandiBot',	
-  'Power Tools',
+  'HandiBot',
+  'Woodshop Level 1 Tools',
+  'Woodshop Level 2 Tools',
+  'Woodshop Level 3 Tools',
   'Print Shop',	
   'Bookbinding',
   'Sewing Machine',
