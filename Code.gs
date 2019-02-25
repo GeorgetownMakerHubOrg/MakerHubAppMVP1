@@ -3,7 +3,7 @@ var userTable = SpreadsheetApp.openById(getUserTableId());
 var safetyTable = SpreadsheetApp.openById(getSafetyTableId());
 
 
-var cacheModules = false;
+var cacheModules = true;
 if(getIsCaching){
   cacheModules = getIsCaching();
 }

@@ -12,7 +12,8 @@ function getModules() {
     "brokenequipment",
     "ihelpedsomeone",
     "staffchecklist",
-    "nonetid"
+    "nonetid",
+    "trellotasklist"
     
     ];
   

@@ -16,7 +16,7 @@ $(function() {
   console.log("getting " + displayStartTime + " -   " + displayEndTime);
   
   function getReservationEvents(callback){
-    console.log("getting " + displayStartTime.toString() + " -   " + displayEndTime.toString());
+    console.log("getting reservation Events " + displayStartTime.toString() + " -   " + displayEndTime.toString());
   
     google.script.run
     .withFailureHandler(function(e){
@@ -70,6 +70,8 @@ $(function() {
   
   function showCurrentReservations(itemname, containerElem){
     $(containerElem).empty();  
+    console.log(reservationEvents);
+    var currentReservations = [];
     var currentReservations = reservationEvents.filter(function(r){
       if(r.title.trim() == itemname.trim()){
         return true;

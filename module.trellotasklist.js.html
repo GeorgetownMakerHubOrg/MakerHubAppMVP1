@@ -1,0 +1,72 @@
+<script>
+count=0;
+$(function() {
+  
+  moment().format();
+  $(".showTrelloTaskList").click(function(){
+      $(".switcher","#trellotasklist").addClass("closed").removeClass("opened");
+      showTrelloTaskList(); 
+      return false;
+  });
+  var loaded=false;
+  function showTrelloTaskList(){
+    $(".appSection").hide();
+    $(".trelloTaskList").show();
+    if (loaded){
+      return;
+    }
+    loaded = true;
+    
+    console.log("All Check List Data");
+    console.log(GLOBALS.allChecklistData);
+    console.log("Global");
+    console.log(GLOBALS);
+    
+    var results=GLOBALS.allChecklistData.filter(function(row){
+       if(row.NetId==GLOBALS.user.sessionUser.netid)
+       {
+          return true;
+       }
+       else{
+           return false;
+        }
+    });
+    
+   
+    var thisUser=results[0];
+    console.log(thisUser);
+    if(thisUser && thisUser["Trello ID"] && thisUser["Trello ID"].trim()!=""){
+         getCards(thisUser["Trello ID"]);
+    }
+    getCards("makerhub4");
+    
+  }
+  
+  function getCards(trelloID){
+    google.script.run
+      .withFailureHandler(function(e){
+        console.log("ERROR in getCards ");
+        console.log(e)
+        $(".getTrelloCardError").text("Doh! there was a problem submitting: " + e);
+        submitting = false;
+      })
+      .withSuccessHandler(function(data){
+        console.log("Got Trello Cards for "+trelloID);
+        console.log(data);
+        displayTrelloCards(data);
+        submitting = false;
+      })
+      .getTrelloCards(trelloID);
+  }
+  function displayTrelloCards(data){
+       for(i=0;i<data.cards.length;i++){
+          description=(data.cards[i].desc).split("\n").join("<br>");
+          url=data.cards[i].shortUrl;
+          $(".userTrelloTaskList").append("<p><button class='btn btn-sm btn-block btn btn-link p-3 mb-2 bg-light text-left' type='button' data-toggle='collapse' data-target='#collapseExample"+count+"' aria-expanded='false' aria-controls='collapseExample'>"+data.cards[i].name+"</button></p>");
+          $(".userTrelloTaskList").append("<div class='collapse' id='collapseExample"+count+"'> <div class='card card-body'>"+description+"<br><a href="+url+" target='_blank'>"+url+"</a></div> </div>");
+          count++;
+       }
+  }
+});
+</script>
+
